@@ -243,11 +243,11 @@ def _user_get():
     """Enforce authenticated user"""
     uid = session.get('uid')
     if not uid:
-        uid = 1
+        uid = "test1"
     user = _user.find_one({'uid': uid})
     if not user:
         user = {
-            'uid': 1,
+            'uid': uid,
             'migrated': 1,
             'storymaps': {},
             'google': {}
@@ -434,7 +434,7 @@ def storymap_copy(user, id):
 def storymap_delete(user, id):
     """Delete storymap"""
     try:
-        key_prefix = storage.key_prefix(user['uid'], id)        
+        key_prefix = storage.key_prefix(user['uid'], id)
         key_list, marker = storage.list_keys(key_prefix, 50)
         for key in key_list:
             storage.delete(key.name);
@@ -851,7 +851,7 @@ templates_dir = os.path.join(settings.PROJECT_ROOT, 'compiled/templates')
 @app.route('/build/embed/')
 def catch_build_embed():
     return send_from_directory(build_dir, 'embed/index.html')
-    
+
 @app.route('/build/<path:path>')
 def catch_build(path):
     return send_from_directory(build_dir, path)
@@ -899,4 +899,3 @@ if __name__ == '__main__':
         sys.exit(1)
 
     app.run(host='0.0.0.0', port=port, debug=True, ssl_context=ssl_context)
-    
