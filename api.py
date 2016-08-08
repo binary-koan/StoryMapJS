@@ -244,11 +244,11 @@ def _user_get():
     """Enforce authenticated user"""
     uid = session.get('uid')
     if not uid:
-        uid = 1
+        uid = "test1"
     user = _user.find_one({'uid': uid})
     if not user:
         user = {
-            'uid': 1,
+            'uid': uid,
             'migrated': 1,
             'storymaps': {},
             'google': {}
