@@ -244,11 +244,16 @@ def _user_get():
     """Enforce authenticated user"""
     uid = session.get('uid')
     if not uid:
-        return redirect(url_for('select'))
+        uid = 1
     user = _user.find_one({'uid': uid})
     if not user:
-        session.pop('uid')
-        return redirect(url_for('select'))
+        user = {
+            'uid': 1,
+            'migrated': 1,
+            'storymaps': {},
+            'google': {}
+        }
+        _user.save(user)
     return user
 
 def check_test_user():
