@@ -737,7 +737,7 @@ def legacy_redirect():
 @app.route("/select/", methods=['GET', 'POST'])
 def select():
     try:
-        uid = session.get('uid')
+        uid = "test1"
         if not uid:
             return render_template('select.html')
 
