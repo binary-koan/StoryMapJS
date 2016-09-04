@@ -32,7 +32,7 @@ if settings.TEST_MODE:
     _mock.stop()
 else:
     _conn = boto3.resource('s3',
-                                endpoint_url='http://127.0.0.1:9000',
+                                endpoint_url=settings.AWS_STORAGE_BUCKET_URL,
                                 aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
                                 aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
                                 config=Config(signature_version='s3v4'),
