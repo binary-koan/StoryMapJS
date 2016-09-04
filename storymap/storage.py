@@ -21,7 +21,6 @@ import requests
 # Get settings module
 settings = sys.modules[os.environ['FLASK_SETTINGS_MODULE']]
 
-<<<<<<< 3efdf15af9b5ffbe92ea358553b261f388d5588e
 
 if settings.TEST_MODE:
     _mock = mock_s3()
