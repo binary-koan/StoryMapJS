@@ -198,7 +198,7 @@ Edited on <%= format_dt(draft_on) %>
 
 <script type="text/javascript">
 
-var _user = {{user|tojson}};
+var _user = { uid: "test1", migrated: 1, storymaps: {} };
 
 var storymap_row_template = _.template($('#storymap_row_template').html().trim());
 
