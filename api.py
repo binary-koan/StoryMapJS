@@ -166,6 +166,10 @@ def _session_pop(*keys):
 # https://developers.google.com/drive/web/quickstart/quickstart-python
 #
 
+def _google_redirect_uri(host):
+    protocol = 'http://' if host.startswith('localhost') else 'https://'
+    return protocol+host+url_for('google_auth_verify')
+
 @app.route("/google/auth/start/", methods=['GET', 'POST'])
 def google_auth_start():
     """Initiate google authorization"""
@@ -173,7 +177,7 @@ def google_auth_start():
         settings.GOOGLE_CLIENT_ID,
         settings.GOOGLE_CLIENT_SECRET,
         _GOOGLE_OAUTH_SCOPES,
-        redirect_uri='https://'+request.host+url_for('google_auth_verify')
+        redirect_uri=_google_redirect_uri(request.host)
     )
     authorize_url = flow.step1_get_authorize_url()
     return redirect(authorize_url)
@@ -192,7 +196,7 @@ def google_auth_verify():
             settings.GOOGLE_CLIENT_ID,
             settings.GOOGLE_CLIENT_SECRET,
             _GOOGLE_OAUTH_SCOPES,
-            redirect_uri='https://'+request.host+url_for('google_auth_verify')
+            redirect_uri=_google_redirect_uri(request.host)
         )
         credentials = flow.step2_exchange(code)
         # ^ this is an oauth2client.client.OAuth2Credentials object
