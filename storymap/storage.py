@@ -13,9 +13,14 @@ from functools import wraps
 import boto3
 import botocore
 from botocore.client import ClientError
+from botocore.client import Config
 from moto import mock_s3
+<<<<<<< 1d7a38284be7bb08a6dbd060121f4a5b17c9271e
 from boto.exception import S3ResponseError
 from boto.s3.connection import OrdinaryCallingFormat
+=======
+from cStringIO import StringIO
+>>>>>>> Change use of aws to a local minio server.
 import requests
 
 # Get settings module
@@ -31,10 +36,14 @@ if settings.TEST_MODE:
 
     _mock.stop()
 else:
-    _conn = boto.connect_s3(
-            settings.AWS_ACCESS_KEY_ID,
-            settings.AWS_SECRET_ACCESS_KEY, calling_format=OrdinaryCallingFormat())
-    _bucket = _conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
+    _conn = boto3.resource('s3',
+                                endpoint_url='http://127.0.0.1:9000',
+                                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+                                config=Config(signature_version='s3v4'),
+                                region_name='us-east-1') #(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+    _bucket = _conn.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+
 
 class StorageException(Exception):
     """
@@ -97,7 +106,7 @@ def list_keys(key_prefix, n, marker=''):
     for i, item in enumerate(_bucket.objects.all()):
         if i == n:
             break
-        if item.name == key_prefix:
+        if item.key == key_prefix:
             continue
         key_list.append(item)
     return key_list, (i == n)
@@ -109,7 +118,7 @@ def get_contents_as_string(src_key):
 @_mock_in_test_mode
 def all_keys():
     for item in enumerate(_bucket.objects.all()):
-        if item.name == key_prefix:
+        if item.key == key_prefix:
             continue
         yield item.key
 
@@ -128,9 +137,9 @@ def list_key_names(key_prefix, n, marker=''):
     for i, item in enumerate(_bucket.objects.all()):
         if i == n:
             break
-        if item.name == key_prefix:
+        if item.key == key_prefix:
             continue
-        name_list.append(item.name)
+        name_list.append(item.key)
     return name_list, (i == n)
 
 @_reraise_s3response
@@ -148,11 +157,9 @@ def save_from_data(key_name, content_type, content):
     """
     Save content with content-type to key_name
     """
-    key = _bucket.get_key(key_name)
-    if not key:
-        key = _bucket.new_key(key_name)
-        key.content_type = content_type
-    key.set_contents_from_string(content, policy='public-read')
+    key = key_name
+
+    _bucket.put_object(Body=StringIO(content).read(), Key=key)
 
 @_reraise_s3response
 @_mock_in_test_mode
@@ -169,8 +176,8 @@ def load_json(key_name):
     """
     Get contents of key as json
     """
-    key = _bucket.get_key(key_name)
-    contents = key.get_contents_as_string()
+    key = key_name
+    contents = _conn.Object(_bucket.name, key).get()["Body"].read().decode("utf-8")
     return json.loads(contents)
 
 @_reraise_s3response
@@ -191,4 +198,4 @@ def delete(key_name):
     """
     Delete key
     """
-    _bucket.delete_key(key_name)
+    _conn.Object(_bucket.name, key_name.key).delete()
