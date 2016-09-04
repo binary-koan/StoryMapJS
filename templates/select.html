@@ -198,7 +198,10 @@ Edited on <%= format_dt(draft_on) %>
 
 <script type="text/javascript">
 
-var _user = { uid: 1, migrated: 1, storymaps: {} };
+var _user = {};
+{% if user %}
+    _user = {{ user|tojson }};
+{% endif %}
 
 var storymap_row_template = _.template($('#storymap_row_template').html().trim());
 
@@ -230,6 +233,7 @@ function make_storymap_list() {
     for(var id in _user.storymaps) {
         _storymap_list.push(_user.storymaps[id]);
     }
+
 }
 
 function validate_storymap_name($modal, name) {
