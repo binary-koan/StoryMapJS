@@ -750,7 +750,7 @@ def select():
     check_test_user()
 
     try:
-        uid = "test1"
+        uid = session.get('uid')
         if not uid:
             return render_template('select.html')
 
