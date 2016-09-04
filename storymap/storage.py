@@ -21,6 +21,7 @@ import requests
 # Get settings module
 settings = sys.modules[os.environ['FLASK_SETTINGS_MODULE']]
 
+<<<<<<< 3efdf15af9b5ffbe92ea358553b261f388d5588e
 
 if settings.TEST_MODE:
     _mock = mock_s3()
@@ -36,7 +37,7 @@ else:
                                 aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
                                 aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
                                 config=Config(signature_version='s3v4'),
-                                region_name='us-east-1') #(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+                                region_name=settings.AWS_REGION_NAME) #(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
     _bucket = _conn.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
 
 
