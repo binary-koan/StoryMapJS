@@ -31,7 +31,7 @@ Stop Test Server
     Close Browser
 
 Open Browser To Authoring Tool
-    Open Browser  ${ROOT URL}  ${BROWSER}
+    Open Browser  ${SERVER}/qunit.html  chrome  http://127.0.0.1:4444/wd/hub
     Maximize Browser Window
     Set Selenium Speed  ${DELAY}
     Authoring Tool Should Be Open
