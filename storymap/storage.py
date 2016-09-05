@@ -98,7 +98,7 @@ def list_keys(key_prefix, n, marker=''):
     key_list = []
     i = 0
 
-    for i, item in enumerate(_bucket.objects.all()):
+    for i, item in enumerate(_bucket.objects.filter(Prefix=key_prefix, Marker=marker)):
         if i == n:
             break
         if item.key == key_prefix:
@@ -126,7 +126,7 @@ def list_key_names(key_prefix, n, marker=''):
     name_list = []
     i = 0
 
-    for i, item in enumerate(_bucket.objects.all()):
+    for i, item in enumerate(_bucket.objects.filter(Prefix=key_prefix, Marker=marker)):
         if i == n:
             break
         if item.key == key_prefix:
@@ -190,4 +190,4 @@ def delete(key_name):
     """
     Delete key
     """
-    _conn.Object(_bucket.name, key_name.key).delete()
+    _bucket.delete_objects(Delete = {'Objects': [{'Key' : key_name.key}]})
