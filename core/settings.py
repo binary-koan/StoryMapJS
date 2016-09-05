@@ -6,9 +6,6 @@ from os import environ as env
 
 TEST_MODE = env.get('TEST_MODE')
 
-if TEST_MODE:
-    print "--- Server starting in test mode, data will not be persisted ---"
-
 CORE_ROOT = dirname(abspath(__file__))
 PROJECT_ROOT = dirname(CORE_ROOT)
 

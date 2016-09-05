@@ -32,4 +32,3 @@ gunicorn==19.3.0
 unicodecsv==0.14.1
 robotframework==3.0
 robotframework_selenium2library==1.8.0
-robotframework-xvfb==1.2.2
