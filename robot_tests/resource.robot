@@ -1,5 +1,6 @@
 *** Settings ***
 Documentation  Reusable keywords and variables for the StoryMap server.
+<<<<<<< c1d07648b8eb15bf4c3b56f8fea622e4e0fdbc99
 Library        Selenium2Library  timeout=5  implicit_wait=30
 Library        OperatingSystem
 Library        Process
@@ -9,6 +10,15 @@ Library        String
 ${PORT}        5001
 ${SERVER}      http://localhost:${PORT}
 ${SERVER LOG}  ${OUTPUT DIR}/server.log
+=======
+Library        Selenium2Library
+Library        XvfbRobot
+Library        Process
+Library        OperatingSystem
+
+*** Variables ***
+${SERVER}      http://localhost:5000
+>>>>>>> [SWEN302] Allow running Robot using XVFB
 ${DELAY}       0
 ${ROOT URL}    ${SERVER}/select/
 
@@ -30,7 +40,10 @@ Stop Test Server
     Close Browser
 
 Open Browser To Authoring Tool
-    Detect And Open Browser  ${SERVER}/select/
+    ${use xvfb} =  Get Environment Variable  USE_XVFB  False
+    Run Keyword If  ${use xvfb}  Start Virtual Display    1920    1080
+
+    Open Browser  ${ROOT URL}
     Maximize Browser Window
     Set Selenium Speed  ${DELAY}
     Authoring Tool Should Be Open
