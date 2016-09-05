@@ -11,7 +11,7 @@ ${ROOT URL}    ${SERVER}/select/
 
 *** Keywords ***
 Start Test Server
-    Start Process  source env.sh && TEST_MODE\=on fab serve  shell=yes stdout=server.log  stderr=server.log  alias=test_server
+    Start Process  bash -c "source env.sh && TEST_MODE\=on fab serve"  shell=yes stdout=server.log  stderr=server.log  alias=test_server
     Sleep  3s
 
 Stop Test Server
@@ -19,7 +19,7 @@ Stop Test Server
     Close Browser
 
 Open Browser To Authoring Tool
-    Open Browser  ${ROOT URL}  ${BROWSER}
+    Open Browser  ${SERVER}/qunit.html  chrome  http://127.0.0.1:4444/wd/hub
     Maximize Browser Window
     Set Selenium Speed  ${DELAY}
     Authoring Tool Should Be Open
