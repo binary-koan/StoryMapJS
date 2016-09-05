@@ -1,11 +1,12 @@
 *** Settings ***
 Documentation  Reusable keywords and variables for the StoryMap server.
 Library        Selenium2Library
+Library        XvfbRobot
 Library        Process
+Library        OperatingSystem
 
 *** Variables ***
 ${SERVER}      http://localhost:5000
-${BROWSER}     Firefox
 ${DELAY}       0
 ${ROOT URL}    ${SERVER}/select/
 
@@ -19,7 +20,10 @@ Stop Test Server
     Close Browser
 
 Open Browser To Authoring Tool
-    Open Browser  ${ROOT URL}  ${BROWSER}
+    ${use xvfb} =  Get Environment Variable  USE_XVFB  False
+    Run Keyword If  ${use xvfb}  Start Virtual Display    1920    1080
+
+    Open Browser  ${ROOT URL}
     Maximize Browser Window
     Set Selenium Speed  ${DELAY}
     Authoring Tool Should Be Open
