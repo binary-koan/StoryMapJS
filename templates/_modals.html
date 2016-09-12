@@ -1,10 +1,9 @@
 <!-- COMMON -->
-
 <div id="error_modal" class="modal hide fade">
     <div class="modal-body">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <p class="modal-msg"></p>
-   </div>
+    </div>
 </div>
 
 <div id="message_modal" class="modal hide fade">
@@ -52,7 +51,7 @@
                                 <span class="add-on">Width</span>
                                 <input type="text" id="width" value="" class="input-mini">
                             </div>
-                             <div class="input-prepend">
+                            <div class="input-prepend">
                                 <span class="add-on">Height</span>
                                 <input type="text" id="height" value="" class="input-mini">
                             </div>
@@ -90,7 +89,7 @@
                             <a class="help" href="javascript:"
                                 data-placement="left"
                                 data-content="Select the language to use in controls and messages when displaying your StoryMap."
-                            >&nbsp;<i class="icon-question-sign icon-large"></i></a>
+                                >&nbsp;<i class="icon-question-sign icon-large"></i></a>
                         </div>
                     </div>
                     <div class="control-group">
@@ -120,19 +119,19 @@
                                 data-placement="bottom"
                                 data-html="true"
                                 data-content="Select a font-set for your StoryMap. See below for examples of how the fonts look.<br><img style='margin-top: 5px' src='{{ STATIC_URL }}img/font-options.png'>"
-                            >&nbsp;<i class="icon-question-sign icon-large"></i></a>
+                                >&nbsp;<i class="icon-question-sign icon-large"></i></a>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Treat As</label>
                         <div class="controls">
                             <label class="radio inline">
-                                <input type="radio" name="map_as_image" value="false" checked>
-                                Cartography
+                            <input type="radio" name="map_as_image" value="false" checked>
+                            Cartography
                             </label>
                             <label class="radio inline">
-                                <input type="radio" name="map_as_image" value="true">
-                                Image
+                            <input type="radio" name="map_as_image" value="true">
+                            Image
                             </label>
                         </div>
                     </div>
@@ -140,23 +139,23 @@
                         <label class="control-label">Call To Action</label>
                         <div class="controls">
                             <label class="radio inline">
-                                <input type="radio" name="call_to_action" value="true" checked>
-                                Yes
+                            <input type="radio" name="call_to_action" value="true" checked>
+                            Yes
                             </label>
                             <label class="radio inline">
-                                <input type="radio" name="call_to_action" value="false">
-                                No
+                            <input type="radio" name="call_to_action" value="false">
+                            No
                             </label>
                             <input type="text" id="call_to_action_text" value="" placeholder="enter text, or use default" class="input-large">
                             <a class="help" href="javascript:"
                                 data-placement="left"
                                 data-html="true"
                                 data-content="Choosing this will show a button on your first slide to lead your readers into the story. You can change the words on the button.<br><img style='margin-top: 5px' src='{{ STATIC_URL }}img/calltoaction.png'>"
-                            >&nbsp;<i class="icon-question-sign icon-large"></i></a>
+                                >&nbsp;<i class="icon-question-sign icon-large"></i></a>
                             <p id="call_to_action_default">Default: "<span id="call_default_text"></span>"</p>
                         </div>
                     </div>
-        <!-- map -->
+                    <!-- map -->
                     <div class="control-group map-control-group">
                         <label class="control-label">Map Type</label>
                         <div class="controls">
@@ -184,7 +183,7 @@
                                 enter them as a single string in the Subdomain field (e.g. subdomains "a", "b", and "c" should
                                 be entered as "abc").</p>
                                 '
-                            >&nbsp;<i class="icon-question-sign icon-large"></i>
+                                >&nbsp;<i class="icon-question-sign icon-large"></i>
                             </a>
                         </div>
                     </div>
@@ -214,8 +213,7 @@
                             <span class="help-inline hide">You must enter your public access token</span>
                         </div>
                     </div>
-
-        <!-- zoomify -->
+                    <!-- zoomify -->
                     <div class="control-group zoomify-control-group">
                         <label class="control-label">Map Background Color</label>
                         <div class="controls">
@@ -230,11 +228,10 @@
                                 data-html="true"
                                 data-placement="left"
                                 data-content='Enter the URL path for your zoomable image folder.'
-                            >&nbsp;<i class="icon-question-sign icon-large"></i>
+                                >&nbsp;<i class="icon-question-sign icon-large"></i>
                             </a>
                         </div>
                     </div>
-
                     <div class="control-group zoomify-control-group">
                         <label class="control-label">Max Image Size</label>
                         <div class="controls">
@@ -263,9 +260,9 @@
                                 <input id="zoomify_path" type="text" class="span3" placeholder="http://www.domain.org/directory/">
                             </div>
                         </div>
-                    </div>
-                    <div class="control-group zoomify-control-group">
-                      <div class="controls">
+                        </div>
+                        <div class="control-group zoomify-control-group">
+                        <div class="controls">
                           <div class="input-prepend">
                               <span class="add-on">Width</span>
                               <input type="text" id="zoomify_width" value="" class="input-small">
@@ -274,8 +271,8 @@
                               <span class="add-on">Height</span>
                               <input type="text" id="zoomify_height" value="" class="input-small">
                           </div>
-                      </div>
-                    </div> -->
+                        </div>
+                        </div> -->
                 </form>
             </div>
             <div class="tab-pane" id="opt_sharing_tab">
@@ -298,58 +295,107 @@
     </div>
 </div>
 
-
-<div id="slide_opt_modal" class="modal hide fade" role="dialog" aria-hidden="true">
-    <div class="modal-header">
-        <h5>Slide Options</h5>
-    </div>
-    <div class="modal-body">
-        <!-- error -->
+<!-- Editing //-->
+<div id="slide_opt_modal" class="modal hide fade" data-backdrop="static">
+     <div class="modal-body">
+     	  <!-- error -->
         <div class="modal-error hide">
             <span class="modal-msg error"></span>
         </div>
-        <p>
-        <label><strong>Background Color</strong></label>
-        <input id="background_color" type="text" placeholder="#ffffff">
-        </p>
-        <p>
-        <label><strong>Background Image</strong></label>
-        <div class="input-prepend" style="width: 96%;">
-            <div class="btn-group">
-                <button class="btn dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                </button>
-                <ul id="background_image_select" class="dropdown-menu">
-                    <li><a href="javascript:">image 1</a></li>
-                    <li><a href="javascript:">image 2</a></li>
-                    <li><a href="javascript:">image 3</a></li>
-
-                </ul>
-            </div>
-            <input type="text" id="background_url" placeholder="<< select an image, or enter an URL">
-        </div>
-        <p>or upload an image to your StoryMap folder.</p>
-        <div class="upload-panel">
-            <form class="form-inline">
-            <a class="upload-file-link btn" href="javascript:">
-            Choose File...
-            <input type="file" class="upload-file" accept="image/*" size="40">
-            </a>
-            &nbsp;<label class="upload-file-name"></label>
-            &nbsp;<a href="javascript:" class="btn btn-success upload pull-right">Upload</a>
-            </form>
-        </div>
-        <div class="upload-conflict hide">
-            <p class="error">A file with the same name already exists.</p>
-            <label class="radio upload-conflict-replace">
-                <input type="radio" name="upload_modal_conflict" value="replace">Replace existing file
-            </label>
-            <div>
-            <label class="radio inline upload-conflict-rename">
-                <input type="radio" name="upload_modal_conflict" value="rename">Save file as:
-                <input class="upload-rename-as" type="text" size="40">
-            </label>
-            </div>
+	    <ul class="nav nav-tabs">
+	        <li class="active"><a href="#opt_slide_tab" data-toggle="tab">Slides</a></li>
+	        <li><a href="#opt_marker_tab" data-toggle="tab">Markers</a></li>
+	    </ul>
+	    <div class="tab-content">
+	    	  <!-- Slide //-->
+	        <div class="tab-pane active" id="opt_slide_tab">
+	            <p>
+	                <label><strong>Background Color</strong></label>
+	                <input id="background_color" type="text" placeholder="#ffffff">
+	            </p>
+	            <label><strong>Background Image</strong></label>
+	            <div class="input-prepend" style="width: 96%;">
+	                <div class="btn-group">
+	                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+	                    <span class="caret"></span>
+	                    </button>
+	                    <ul id="background_image_select" class="dropdown-menu">
+	                        <li><a href="javascript:">image 1</a></li>
+	                        <li><a href="javascript:">image 2</a></li>
+	                        <li><a href="javascript:">image 3</a></li>
+	                    </ul>
+	                </div>
+	                <input type="text" id="background_url" placeholder="<< select an image, or enter an URL">
+	            </div>
+	            <p>or upload an image to your StoryMap folder.</p>
+	            <div class="upload-panel">
+	                <form class="form-inline">
+	                    <a class="upload-file-link btn" href="javascript:">
+	                    Choose File...
+	                    <input type="file" class="upload-file" accept="image/*" size="40">
+	                    </a>
+	                    &nbsp;<label class="upload-file-name"></label>
+	                    &nbsp;<a href="javascript:" class="btn btn-success upload pull-right">Upload</a>
+	                </form>
+	            </div>
+	            <div class="upload-conflict hide">
+	                <p class="error">A file with the same name already exists.</p>
+	                <label class="radio upload-conflict-replace">
+	                <input type="radio" name="upload_modal_conflict" value="replace">Replace existing file
+	                </label>
+	                <div>
+	                    <label class="radio inline upload-conflict-rename">
+	                    <input type="radio" name="upload_modal_conflict" value="rename">Save file as:
+	                    <input class="upload-rename-as" type="text" size="40">
+	                    </label>
+	                </div>
+	            </div>
+	        </div>
+	    	  <!-- Markers //-->
+	        <div class="tab-pane" id="opt_marker_tab">
+	            <div class="modal-error hide">
+	                <span class="modal-msg error"></span>
+	            </div>
+	            <p>
+	                <label><strong>Marker Icon</strong></label>
+					</p>
+	            <div class="input-prepend" style="width: 96%;">
+	                <div class="btn-group">
+	                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+	                    <span class="caret"></span>
+	                    </button>
+	                    <ul id="marker_image_select" class="dropdown-menu">
+	                        <li><a href="javascript:">image 1</a></li>
+	                        <li><a href="javascript:">image 2</a></li>
+	                        <li><a href="javascript:">image 3</a></li>
+	                    </ul>
+	                </div>
+	                <input type="text" id="marker_url" placeholder="<< select an image, or enter an URL">
+	            </div>
+	            <p>or upload an new marker to your StoryMap folder.</p>
+	            <div class="upload-panel">
+	                <form class="form-inline">
+	                    <a class="upload-file-link btn" href="javascript:">
+	                    Choose File...
+	                    <input type="file" class="upload-file" accept="image/*" size="40">
+	                    </a>
+	                    &nbsp;<label class="upload-file-name"></label>
+	                    &nbsp;<a href="javascript:" class="btn btn-success upload pull-right">Upload</a>
+	                </form>
+	            </div>
+	            <div class="upload-conflict hide">
+	                <p class="error">A file with the same name already exists.</p>
+	                <label class="radio upload-conflict-replace">
+	                <input type="radio" name="upload_modal_conflict" value="replace">Replace existing file
+	                </label>
+	                <div>
+	                    <label class="radio inline upload-conflict-rename">
+	                    <input type="radio" name="upload_modal_conflict" value="rename">Save file as:
+	                    <input class="upload-rename-as" type="text" size="40">
+	                    </label>
+	                </div>
+	            </div>
+	        </div>
         </div>
     </div>
     <div class="modal-footer">
@@ -376,23 +422,23 @@
         <p>Select an image file to upload to your StoryMap folder.</p>
         <div class="upload-panel">
             <form class="form-inline">
-            <a class="upload-file-link btn" href="javascript:">
-            Choose File...
-            <input type="file" class="upload-file" accept="image/*" size="40">
-            </a>
-            &nbsp;<label class="upload-file-name"></label>
+                <a class="upload-file-link btn" href="javascript:">
+                Choose File...
+                <input type="file" class="upload-file" accept="image/*" size="40">
+                </a>
+                &nbsp;<label class="upload-file-name"></label>
             </form>
         </div>
         <div class="upload-conflict hide">
             <p>A file with the same name already exists.</p>
             <label class="radio upload-conflict-replace">
-                <input type="radio" name="upload_modal_conflict" value="replace">Replace existing file
+            <input type="radio" name="upload_modal_conflict" value="replace">Replace existing file
             </label>
             <div>
-            <label class="radio inline upload-conflict-rename">
+                <label class="radio inline upload-conflict-rename">
                 <input type="radio" name="upload_modal_conflict" value="rename">Save file as:
                 <input class="upload-rename-as" type="text" size="40">
-            </label>
+                </label>
             </div>
         </div>
     </div>
@@ -411,118 +457,115 @@
     </div>
 </div>
 
-
 <div id="share_modal" class="modal hide fade" data-backdrop="static">
-	<div class="modal-header">
-		<h4>Share This StoryMap</h4>
-	</div>
-	<div class="modal-body">
-
+    <div class="modal-header">
+        <h4>Share This StoryMap</h4>
+    </div>
+    <div class="modal-body">
         <!-- error -->
         <div class="modal-error hide">
             <span class="modal-msg error"></span>
         </div>
         <!-- main -->
-		<div id="share_publish_panel" class="hide">
-			<form class="form-inline">
-				<label><i class="icon-warning-sign"></i> You have unpublished changes:</label>
-					&nbsp;
-				<a id="share_publish" class="btn" href="javascript:;">Publish Changes</a>
-			</form>
-		</div>
-		<div class="share-link-container">
-			<div class="share-link">
-				<label>Link</label>
-				<input type="text" id="share_url" class="stretch" onfocus="this.select();" onmouseup="return false;">
-			</div>
-			<div class="share-social">
-				<label>Social</label>
-				<div class="share-social-icons">
-					<a class="share-link-twitter" target="_blank" href="#" title="Share on Twitter">
-						<i class="icon-twitter icon-2x"></i>
-					</a>
-					<a class="share-link-facebook" target="_blank" href='#' title="Share on Facebook">
-						<i class="icon-facebook-sign icon-2x"></i>
-					</a>
-					<a class="share-link-googleplus" target="_blank" href='#' title="Share on Google+">
-						<i class="icon-google-plus-sign icon-2x"></i>
-					</a>
-					<a class="share-link-reddit" target="_blank" href="#" title="Share on Reddit">
-						<img src="//www.reddit.com/static/spreddit5.gif" />
-					</a>
-				</div>
-			</div>
-		</div>
-    <div id="oembed-note">
-      <p class="note">You can put this link on a line by itself to embed your storymap on <a href="https://medium.com">Medium.com</a> <a href="http://knightlab.northwestern.edu/2016/06/15/knight-lab-tools-now-embeddable-on-medium/" target="_blank"><i class="icon-question-sign icon-large"></i></a></p>
+        <div id="share_publish_panel" class="hide">
+            <form class="form-inline">
+                <label><i class="icon-warning-sign"></i> You have unpublished changes:</label>
+                &nbsp;
+                <a id="share_publish" class="btn" href="javascript:;">Publish Changes</a>
+            </form>
+        </div>
+        <div class="share-link-container">
+            <div class="share-link">
+                <label>Link</label>
+                <input type="text" id="share_url" class="stretch" onfocus="this.select();" onmouseup="return false;">
+            </div>
+            <div class="share-social">
+                <label>Social</label>
+                <div class="share-social-icons">
+                    <a class="share-link-twitter" target="_blank" href="#" title="Share on Twitter">
+                    <i class="icon-twitter icon-2x"></i>
+                    </a>
+                    <a class="share-link-facebook" target="_blank" href='#' title="Share on Facebook">
+                    <i class="icon-facebook-sign icon-2x"></i>
+                    </a>
+                    <a class="share-link-googleplus" target="_blank" href='#' title="Share on Google+">
+                    <i class="icon-google-plus-sign icon-2x"></i>
+                    </a>
+                    <a class="share-link-reddit" target="_blank" href="#" title="Share on Reddit">
+                    <img src="//www.reddit.com/static/spreddit5.gif" />
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="oembed-note">
+            <p class="note">You can put this link on a line by itself to embed your storymap on <a href="https://medium.com">Medium.com</a> <a href="http://knightlab.northwestern.edu/2016/06/15/knight-lab-tools-now-embeddable-on-medium/" target="_blank"><i class="icon-question-sign icon-large"></i></a></p>
+        </div>
+        <div class="share-embed-container">
+            <div class="tab-pane" id="opt_sharing_tab">
+                <p class='note'>
+                    Set these values to improve how your StoryMap appears as part of a tweet or Facebook share.
+                </p>
+                <p>
+                    <label><strong>Description</strong></label>
+                    <textarea id="share_description" class="stretch" rows="3"></textarea>
+                </p>
+                <p>
+                    <label><strong>Featured Image</strong></label>
+                <div class="input-prepend" style="width: 96%;">
+                    <div class="btn-group">
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        </button>
+                        <ul id="share_image_select" class="dropdown-menu">
+                            <li><a href="javascript:">image 1</a></li>
+                            <li><a href="javascript:">image 2</a></li>
+                            <li><a href="javascript:">image 3</a></li>
+                        </ul>
+                    </div>
+                    <input type="text" id="share_image_url" placeholder="<< select an image, or enter an URL">
+                </div>
+                <p>or upload an image to your StoryMap folder.</p>
+                <div class="upload-panel">
+                    <form class="form-inline">
+                        <a class="upload-file-link btn" href="javascript:">
+                        Choose File...
+                        <input type="file" class="upload-file" accept="image/*" size="40">
+                        </a>
+                        &nbsp;<label class="upload-file-name"></label>
+                        &nbsp;<a href="javascript:" class="btn btn-success upload pull-right">Upload</a>
+                    </form>
+                </div>
+                <div class="upload-conflict hide">
+                    <p class="error">A file with the same name already exists.</p>
+                    <label class="radio upload-conflict-replace">
+                    <input type="radio" name="upload_modal_conflict" value="replace">Replace existing file
+                    </label>
+                    <div>
+                        <label class="radio inline upload-conflict-rename">
+                        <input type="radio" name="upload_modal_conflict" value="rename">Save file as:
+                        <input class="upload-rename-as" type="text" size="40">
+                        </label>
+                    </div>
+                </div>
+                </p>
+            </div>
+            <label>Embed</label>
+            <textarea id="share_embed" rows="5" onfocus="this.select();" onmouseup="return false;"></textarea>
+            <div class="share-embed-params">
+                <div class="vco-icon-arrow-up"></div>
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">Width</span>
+                        <input type="text" id="share_width" value="" class="input-mini">
+                    </div>
+                    <div class="input-prepend">
+                        <span class="add-on">Height</span>
+                        <input type="text" id="share_height" value="" class="input-mini">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-		<div class="share-embed-container">
-      <div class="tab-pane" id="opt_sharing_tab">
-          <p class='note'>
-              Set these values to improve how your StoryMap appears as part of a tweet or Facebook share.
-          </p>
-          <p>
-          <label><strong>Description</strong></label>
-          <textarea id="share_description" class="stretch" rows="3"></textarea>
-          </p>
-          <p>
-          <label><strong>Featured Image</strong></label>
-          <div class="input-prepend" style="width: 96%;">
-              <div class="btn-group">
-                  <button class="btn dropdown-toggle" data-toggle="dropdown">
-                      <span class="caret"></span>
-                  </button>
-                  <ul id="share_image_select" class="dropdown-menu">
-                      <li><a href="javascript:">image 1</a></li>
-                      <li><a href="javascript:">image 2</a></li>
-                      <li><a href="javascript:">image 3</a></li>
-                  </ul>
-              </div>
-              <input type="text" id="share_image_url" placeholder="<< select an image, or enter an URL">
-          </div>
-          <p>or upload an image to your StoryMap folder.</p>
-          <div class="upload-panel">
-              <form class="form-inline">
-              <a class="upload-file-link btn" href="javascript:">
-              Choose File...
-              <input type="file" class="upload-file" accept="image/*" size="40">
-              </a>
-              &nbsp;<label class="upload-file-name"></label>
-              &nbsp;<a href="javascript:" class="btn btn-success upload pull-right">Upload</a>
-              </form>
-          </div>
-          <div class="upload-conflict hide">
-              <p class="error">A file with the same name already exists.</p>
-              <label class="radio upload-conflict-replace">
-                  <input type="radio" name="upload_modal_conflict" value="replace">Replace existing file
-              </label>
-              <div>
-              <label class="radio inline upload-conflict-rename">
-                  <input type="radio" name="upload_modal_conflict" value="rename">Save file as:
-                  <input class="upload-rename-as" type="text" size="40">
-              </label>
-              </div>
-          </div>
-          </p>
-      </div>
-			<label>Embed</label>
-			 <textarea id="share_embed" rows="5" onfocus="this.select();" onmouseup="return false;"></textarea>
-			 <div class="share-embed-params">
-				  <div class="vco-icon-arrow-up"></div>
-				 <div class="controls">
-					 <div class="input-prepend">
-						 <span class="add-on">Width</span>
-						 <input type="text" id="share_width" value="" class="input-mini">
-					 </div>
-					 <div class="input-prepend">
-						 <span class="add-on">Height</span>
-						 <input type="text" id="share_height" value="" class="input-mini">
-					 </div>
-				 </div>
-			 </div>
-		</div>
-
-	</div>
     <div class="modal-footer">
         <a href="javascript:;" class="btn btn-primary" data-dismiss="modal">Close</a>
     </div>

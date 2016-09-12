@@ -1204,6 +1204,7 @@ $(function() {
             $('#background_url').val(url).change();
             $(this).find('.upload-panel').trigger('reset');
         })
+        // need to add one of these for markers
         .on('refresh_background_select', function(event) {
             var html = '';
             for(var i = 0; i < _storymap_files.length; i++) {
@@ -1217,7 +1218,8 @@ $(function() {
             var color = background.color || '';
             var opacity = (background.opacity || 100) / 100;
             var url = background.url || '';
-
+				// need vars for markers
+				
             $('#background_color').minicolors('value', color);
             $('#background_color').minicolors('opacity', opacity);
 
@@ -1236,6 +1238,7 @@ $(function() {
             });
 
             $('#background_url').val(url);
+            // fill marker_url field
 
             $(this).find('.upload-panel').trigger('reset');
             $(this).trigger('reset', error_msg);
