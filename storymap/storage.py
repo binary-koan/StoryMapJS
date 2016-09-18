@@ -10,25 +10,35 @@ import time
 import traceback
 import json
 from functools import wraps
-import boto
+import boto3
+import botocore
+from botocore.client import ClientError
+from botocore.client import Config
 from moto import mock_s3
-from boto.exception import S3ResponseError
+from cStringIO import StringIO
 import requests
 
 # Get settings module
 settings = sys.modules[os.environ['FLASK_SETTINGS_MODULE']]
 
+
 if settings.TEST_MODE:
     _mock = mock_s3()
     _mock.start()
 
-    _conn = boto.connect_s3()
-    _bucket = _conn.create_bucket(settings.AWS_STORAGE_BUCKET_NAME)
+    _conn = boto3.resource('s3')
+    _bucket = _conn.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
 
     _mock.stop()
 else:
-    _conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
-    _bucket = _conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
+    _conn = boto3.resource('s3',
+                                endpoint_url=settings.AWS_STORAGE_BUCKET_URL,
+                                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+                                config=Config(signature_version='s3v4'),
+                                region_name=settings.AWS_REGION_NAME) #(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+    _bucket = _conn.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+
 
 class StorageException(Exception):
     """
@@ -53,14 +63,14 @@ def _mock_in_test_mode(f):
 
 
 def _reraise_s3response(f):
-    """Decorator trap and re-raise S3ResponseError as StorageException"""
+    """Decorator trap and re-raise S3ResponseError (ClientError) as StorageException"""
     @wraps(f)
     def decorated_function(*args, **kwargs):
         try:
             return f(*args, **kwargs)
-        except S3ResponseError, e:
+        except ClientError, e:
             print traceback.format_exc()
-            raise StorageException(e.message, e.body)
+            raise StorageException(e, "")
     return decorated_function
 
 
@@ -88,10 +98,10 @@ def list_keys(key_prefix, n, marker=''):
     key_list = []
     i = 0
 
-    for i, item in enumerate(_bucket.list(prefix=key_prefix, marker=marker)):
+    for i, item in enumerate(_bucket.objects.filter(Prefix=key_prefix, Marker=marker)):
         if i == n:
             break
-        if item.name == key_prefix:
+        if item.key == key_prefix:
             continue
         key_list.append(item)
     return key_list, (i == n)
@@ -99,8 +109,8 @@ def list_keys(key_prefix, n, marker=''):
 
 @_mock_in_test_mode
 def all_keys():
-    for item in _bucket.list(prefix=settings.AWS_STORAGE_BUCKET_KEY):
-        if item.name == key_prefix:
+    for item in enumerate(_bucket.objects.all()):
+        if item.key == key_prefix:
             continue
         yield item.key
 
@@ -116,12 +126,12 @@ def list_key_names(key_prefix, n, marker=''):
     name_list = []
     i = 0
 
-    for i, item in enumerate(_bucket.list(prefix=key_prefix, marker=marker)):
+    for i, item in enumerate(_bucket.objects.filter(Prefix=key_prefix, Marker=marker)):
         if i == n:
             break
-        if item.name == key_prefix:
+        if item.key == key_prefix:
             continue
-        name_list.append(item.name)
+        name_list.append(item.key)
     return name_list, (i == n)
 
 @_reraise_s3response
@@ -139,11 +149,9 @@ def save_from_data(key_name, content_type, content):
     """
     Save content with content-type to key_name
     """
-    key = _bucket.get_key(key_name)
-    if not key:
-        key = _bucket.new_key(key_name)
-        key.content_type = content_type
-    key.set_contents_from_string(content, policy='public-read')
+    key = key_name
+
+    _bucket.put_object(Body=StringIO(content).read(), Key=key)
 
 @_reraise_s3response
 @_mock_in_test_mode
@@ -160,8 +168,8 @@ def load_json(key_name):
     """
     Get contents of key as json
     """
-    key = _bucket.get_key(key_name)
-    contents = key.get_contents_as_string()
+    key = key_name
+    contents = _conn.Object(_bucket.name, key).get()["Body"].read().decode("utf-8")
     return json.loads(contents)
 
 @_reraise_s3response
@@ -182,4 +190,4 @@ def delete(key_name):
     """
     Delete key
     """
-    _bucket.delete_key(key_name)
+    _bucket.delete_objects(Delete = {'Objects': [{'Key' : key_name.key}]})
