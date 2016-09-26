@@ -12,21 +12,60 @@ Create StoryMap
 Delete StoryMap
     Open Browser To Authoring Tool
     Wait Until Loaded
-    Delete StoryMap  Test
+    Delete StoryMap  test
+    StoryMap Should Not Exist  Test
+    StoryMap Should Not Exist ID  test
 
 Create And Delete Multiple StoryMaps
     Open Browser To Authoring Tool
-    Wait Until Loaded
     Create StoryMap  Test1
     Create Another StoryMap  Test2
     Create Another StoryMap  SomeOtherVeryDifferentName
     Go To  ${SERVER}/select
-    Delete StoryMap  Test2
+    Sleep  2sec
+    Delete StoryMap  test2
     StoryMap Should Exist  Test1
     StoryMap Should Exist  SomeOtherVeryDifferentName
-    Delete StoryMap  SomeOtherVeryDifferentName
+    Delete StoryMap  someotherverydifferentname
     StoryMap Should Exist  Test1
-    Delete StoryMap  Test1
+    Delete StoryMap  test1
     StoryMap Should Not Exist  Test1
     StoryMap Should Not Exist  Test2
     StoryMap Should Not Exist  SomeOtherVeryDifferentName
+
+Rename A StoryMap
+    Open Browser To Authoring Tool
+    Create StoryMap  Test1
+    StoryMap Should Exist  Test1
+    Rename StoryMap  Test1  Test2
+    StoryMap Should Not Exist  Test1
+    StoryMap Should Exist  Test2
+    #The ID doesn't change when we rename
+    Delete StoryMap  test1
+
+Copy A StoryMap
+    Open Browser To Authoring Tool
+    Create StoryMap  Test1
+    StoryMap Should Exist  Test1
+    Copy StoryMap  Test1  Test2
+    StoryMap Should Exist  Test1
+    StoryMap Should Exist  Test2
+    Delete StoryMap  test1
+    Delete StoryMap  test2
+
+Edit A StoryMap
+    Open Browser To Authoring Tool
+    Create StoryMap  Test
+    StoryMap Should Exist  Test
+    Edit StoryMap  Test
+    Create New StoryMap Slide
+    Edit StoryMap Fields  Location slide  Body Text
+    Edit StoryMap Slide Location  Victora University of Wellington, New Zealand
+    Click Preview Button
+    Click Back To Beginning
+    Page Should Contain  Test
+    Click Next Slide
+    Page Should Contain  slide
+    Page Should Contain  Body Text
+    Go To  ${SERVER}/select
+    Delete StoryMap  Test

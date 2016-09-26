@@ -40,6 +40,7 @@ app = Flask(__name__)
 app.config.from_envvar('FLASK_SETTINGS_FILE')
 
 settings = sys.modules[settings_module]
+app.config['TEST_MODE'] = settings.TEST_MODE
 
 _GOOGLE_OAUTH_SCOPES = [
     'https://www.googleapis.com/auth/drive.readonly',
@@ -422,7 +423,7 @@ def storymap_copy(user, id):
             dst_key_name = "%s%s" % (dst_key_prefix, file_name)
 
             if file_name.endswith('.json'):
-                json_string = src_key.get_contents_as_string()
+                json_string = storage.get_contents_as_string(src_key)
                 storage.save_json(dst_key_name,
                     src_re.sub(dst_key_prefix, json_string))
             else:
