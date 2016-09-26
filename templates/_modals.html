@@ -297,107 +297,117 @@
 
 <!-- Editing //-->
 <div id="slide_opt_modal" class="modal hide fade" data-backdrop="static">
-     <div class="modal-body">
+    <div class="modal-header">
+        <h4>Slides</h4>
+    </div>
+    <div class="modal-body">
      	  <!-- error -->
         <div class="modal-error hide">
             <span class="modal-msg error"></span>
         </div>
-	    <ul class="nav nav-tabs">
-	        <li class="active"><a href="#opt_slide_tab" data-toggle="tab">Slides</a></li>
-	        <li><a href="#opt_marker_tab" data-toggle="tab">Markers</a></li>
-	    </ul>
-	    <div class="tab-content">
-	    	  <!-- Slide //-->
-	        <div class="tab-pane active" id="opt_slide_tab">
-	            <p>
-	                <label><strong>Background Color</strong></label>
-	                <input id="background_color" type="text" placeholder="#ffffff">
-	            </p>
-	            <label><strong>Background Image</strong></label>
-	            <div class="input-prepend" style="width: 96%;">
-	                <div class="btn-group">
-	                    <button class="btn dropdown-toggle" data-toggle="dropdown">
-	                    <span class="caret"></span>
-	                    </button>
-	                    <ul id="background_image_select" class="dropdown-menu">
-	                        <li><a href="javascript:">image 1</a></li>
-	                        <li><a href="javascript:">image 2</a></li>
-	                        <li><a href="javascript:">image 3</a></li>
-	                    </ul>
-	                </div>
-	                <input type="text" id="background_url" placeholder="<< select an image, or enter an URL">
-	            </div>
-	            <p>or upload an image to your StoryMap folder.</p>
-	            <div class="upload-panel">
-	                <form class="form-inline">
-	                    <a class="upload-file-link btn" href="javascript:">
-	                    Choose File...
-	                    <input type="file" class="upload-file" accept="image/*" size="40">
-	                    </a>
-	                    &nbsp;<label class="upload-file-name"></label>
-	                    &nbsp;<a href="javascript:" class="btn btn-success upload pull-right">Upload</a>
-	                </form>
-	            </div>
-	            <div class="upload-conflict hide">
-	                <p class="error">A file with the same name already exists.</p>
-	                <label class="radio upload-conflict-replace">
-	                <input type="radio" name="upload_modal_conflict" value="replace">Replace existing file
-	                </label>
-	                <div>
-	                    <label class="radio inline upload-conflict-rename">
-	                    <input type="radio" name="upload_modal_conflict" value="rename">Save file as:
-	                    <input class="upload-rename-as" type="text" size="40">
-	                    </label>
-	                </div>
-	            </div>
-	        </div>
-	    	  <!-- Markers //-->
-	        <div class="tab-pane" id="opt_marker_tab">
-	            <div class="modal-error hide">
-	                <span class="modal-msg error"></span>
-	            </div>
-	            <p>
-	                <label><strong>Marker Icon</strong></label>
-					</p>
-	            <div class="input-prepend" style="width: 96%;">
-	                <div class="btn-group">
-	                    <button class="btn dropdown-toggle" data-toggle="dropdown">
-	                    <span class="caret"></span>
-	                    </button>
-	                    <ul id="marker_image_select" class="dropdown-menu">
-	                        <li><a href="javascript:">image 1</a></li>
-	                        <li><a href="javascript:">image 2</a></li>
-	                        <li><a href="javascript:">image 3</a></li>
-	                    </ul>
-	                </div>
-	                <input type="text" id="marker_url" placeholder="<< select an image, or enter an URL">
-	            </div>
-	            <p>or upload an new marker to your StoryMap folder.</p>
-	            <div class="upload-panel">
-	                <form class="form-inline">
-	                    <a class="upload-file-link btn" href="javascript:">
-	                    Choose File...
-	                    <input type="file" class="upload-file" accept="image/*" size="40">
-	                    </a>
-	                    &nbsp;<label class="upload-file-name"></label>
-	                    &nbsp;<a href="javascript:" class="btn btn-success upload pull-right">Upload</a>
-	                </form>
-	            </div>
-	            <div class="upload-conflict hide">
-	                <p class="error">A file with the same name already exists.</p>
-	                <label class="radio upload-conflict-replace">
-	                <input type="radio" name="upload_modal_conflict" value="replace">Replace existing file
-	                </label>
-	                <div>
-	                    <label class="radio inline upload-conflict-rename">
-	                    <input type="radio" name="upload_modal_conflict" value="rename">Save file as:
-	                    <input class="upload-rename-as" type="text" size="40">
-	                    </label>
-	                </div>
-	            </div>
-	        </div>
+	     <p>
+	         <label><strong>Background Color</strong></label>
+	         <input id="background_color" type="text" placeholder="#ffffff">
+	     </p>
+	     <label><strong>Background Image</strong></label>
+	     <div class="input-prepend" style="width: 96%;">
+	         <div class="btn-group">
+	             <button class="btn dropdown-toggle" data-toggle="dropdown">
+	             <span class="caret"></span>
+	             </button>
+	             <ul id="background_image_select" class="image-select dropdown-menu">
+	                 <li><a href="javascript:">image 1</a></li>
+	                 <li><a href="javascript:">image 2</a></li>
+	                 <li><a href="javascript:">image 3</a></li>
+	             </ul>
+	         </div>
+	         <input type="text" id="background_url" placeholder="<< select an image, or enter an URL">
+	     </div>
+	     <p>or upload an image to your StoryMap folder.</p>
+	     <div class="upload-panel">
+	         <form class="form-inline">
+	             <a class="upload-file-link btn" href="javascript:">
+		             Choose File...
+	                <input type="file" class="upload-file" accept="image/*" size="40">
+	             </a>
+	             &nbsp;<label class="upload-file-name"></label>
+	             &nbsp;<a href="javascript:" class="btn btn-success upload pull-right">Upload</a>
+	         </form>
+	     </div>
+	     <div class="upload-conflict hide">
+	         <p class="error">A file with the same name already exists.</p>
+	         <label class="radio upload-conflict-replace">
+	         <input type="radio" name="upload_modal_conflict" value="replace">Replace existing file
+	         </label>
+	         <div>
+	             <label class="radio inline upload-conflict-rename">
+	             <input type="radio" name="upload_modal_conflict" value="rename">Save file as:
+	             <input class="upload-rename-as" type="text" size="40">
+	             </label>
+	         </div>
+	     </div>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:;" class="btn btn-primary" data-dismiss="modal">Close</a>
+    </div>
+    <!-- progress -->
+    <div class="modal-progress hide">
+        <div>
+            <div>
+                <i class="icon-spinner icon-4x icon-spin"></i>
+                <p><span class="modal-msg"></span>...</p>
+            </div>
         </div>
     </div>
+</div>
+
+<!-- Markers //-->
+<div id="marker_opt_modal" class="modal hide fade" data-backdrop="static">
+    <div class="modal-header">
+        <h4>Map Markers</h4>
+    </div>
+    <div class="modal-body">
+     	  <!-- error -->
+        <div class="modal-error hide">
+            <span class="modal-msg error"></span>
+        </div>
+	     <div class="input-prepend" style="width: 96%;">
+	         <div class="btn-group">
+	             <button class="btn dropdown-toggle" data-toggle="dropdown">
+	             <span class="caret"></span>
+	             </button>
+	             <ul id="marker_image_select" class="image-select dropdown-menu">
+	                 <li><a href="javascript:">image 1</a></li>
+	                 <li><a href="javascript:">image 2</a></li>
+	                 <li><a href="javascript:">image 3</a></li>
+	             </ul>
+	         </div>
+	         <input type="text" id="marker_url" placeholder="<< select an image, or enter an URL">
+	     </div>
+	     <p>or upload an new marker to your StoryMap folder.</p>
+	     <div class="upload-panel">
+	         <form class="form-inline">
+	             <a class="upload-file-link btn" href="javascript:">
+	             Choose File...
+	             <input type="file" class="upload-file" accept="image/*" size="40">
+	             </a>
+	             &nbsp;<label class="upload-file-name"></label>
+	             &nbsp;<a href="javascript:" class="btn btn-success upload pull-right">Upload</a>
+	         </form>
+	     </div>
+	     <div class="upload-conflict hide">
+	         <p class="error">A file with the same name already exists.</p>
+	         <label class="radio upload-conflict-replace">
+	         <input type="radio" name="upload_modal_conflict" value="replace">Replace existing file
+	         </label>
+	         <div>
+	             <label class="radio inline upload-conflict-rename">
+	             <input type="radio" name="upload_modal_conflict" value="rename">Save file as:
+	             <input class="upload-rename-as" type="text" size="40">
+	             </label>
+	         </div>
+	    </div>
+	 </div>
     <div class="modal-footer">
         <a href="javascript:;" class="btn btn-primary" data-dismiss="modal">Close</a>
     </div>
