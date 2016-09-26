@@ -6,7 +6,7 @@ Resource        resource.robot
 
 *** Test Cases ***
 Run QUnit
-    Open Browser  ${SERVER}/qunit.html  chrome  http://127.0.0.1:4444/wd/hub
+    Go To  ${SERVER}/qunit.html
     Wait Until Page Contains  Tests completed
     ${failed count} =  Execute Javascript  return parseInt($('#qunit-testresult .failed').text())
     ${tests failed} =  Set Variable  ${failed count} != ${0}
