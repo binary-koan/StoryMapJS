@@ -1,0 +1,1699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20160926 12:00:27.614" generator="Robot 3.0 (Python 2.7.12 on linux2)">
+<suite source="/home/alex/swen302/StoryMapJS/robot_tests" id="s1" name="Robot Tests">
+<suite source="/home/alex/swen302/StoryMapJS/robot_tests/qunit.robot" id="s1-s1" name="Qunit">
+<kw type="setup" name="Start Test Server" library="resource">
+<kw name="Start Process" library="Process">
+<doc>Starts a new process on background.</doc>
+<arguments>
+<arg>bash -c "source env.sh &amp;&amp; TEST_MODE\=on fab serve:port\=${PORT}"</arg>
+<arg>shell=yes</arg>
+<arg>stdout=${SERVER LOG}</arg>
+<arg>stderr=${SERVER LOG}</arg>
+<arg>alias=test_server</arg>
+</arguments>
+<msg timestamp="20160926 12:00:27.795" level="INFO">Starting process:
+bash -c "source env.sh &amp;&amp; TEST_MODE=on fab serve:port=5001"</msg>
+<status status="PASS" endtime="20160926 12:00:27.805" starttime="20160926 12:00:27.795"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3s</arg>
+</arguments>
+<msg timestamp="20160926 12:00:30.807" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" endtime="20160926 12:00:30.807" starttime="20160926 12:00:27.806"></status>
+</kw>
+<kw name="Open Browser To Homepage" library="resource">
+<kw name="Get Environment Variable" library="OperatingSystem">
+<doc>Returns the value of an environment variable with the given name.</doc>
+<arguments>
+<arg>BROWSER</arg>
+<arg>default=chrome</arg>
+</arguments>
+<assign>
+<var>${browser}</var>
+</assign>
+<msg timestamp="20160926 12:00:30.811" level="INFO">${browser} = firefox</msg>
+<status status="PASS" endtime="20160926 12:00:30.811" starttime="20160926 12:00:30.810"></status>
+</kw>
+<kw name="Open Browser" library="Selenium2Library">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>${SERVER}</arg>
+<arg>browser=${browser}</arg>
+</arguments>
+<msg timestamp="20160926 12:00:30.813" level="INFO">Opening browser 'firefox' to base url 'http://localhost:5001'</msg>
+<status status="PASS" endtime="20160926 12:01:09.676" starttime="20160926 12:00:30.812"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:09.677" starttime="20160926 12:00:30.808"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:09.677" starttime="20160926 12:00:27.794"></status>
+</kw>
+<test id="s1-s1-t1" name="Run QUnit">
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/qunit.html</arg>
+</arguments>
+<msg timestamp="20160926 12:01:09.681" level="INFO">Opening url 'http://localhost:5001/qunit.html'</msg>
+<status status="PASS" endtime="20160926 12:01:10.210" starttime="20160926 12:01:09.681"></status>
+</kw>
+<kw name="Wait Until Page Contains" library="Selenium2Library">
+<doc>Waits until `text` appears on current page.</doc>
+<arguments>
+<arg>Tests completed</arg>
+</arguments>
+<status status="PASS" endtime="20160926 12:01:10.737" starttime="20160926 12:01:10.215"></status>
+</kw>
+<kw name="Execute Javascript" library="Selenium2Library">
+<doc>Executes the given JavaScript code.</doc>
+<arguments>
+<arg>return parseInt($('#qunit-testresult .failed').text())</arg>
+</arguments>
+<assign>
+<var>${failed count}</var>
+</assign>
+<msg timestamp="20160926 12:01:10.738" level="INFO">Executing JavaScript:
+return parseInt($('#qunit-testresult .failed').text())</msg>
+<msg timestamp="20160926 12:01:10.751" level="INFO">${failed count} = 1</msg>
+<status status="PASS" endtime="20160926 12:01:10.751" starttime="20160926 12:01:10.738"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${failed count} != ${0}</arg>
+</arguments>
+<assign>
+<var>${tests failed}</var>
+</assign>
+<msg timestamp="20160926 12:01:10.752" level="INFO">${tests failed} = 1 != 0</msg>
+<status status="PASS" endtime="20160926 12:01:10.752" starttime="20160926 12:01:10.752"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${tests failed}</arg>
+<arg>Capture Page Screenshot</arg>
+</arguments>
+<kw name="Capture Page Screenshot" library="Selenium2Library">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<msg timestamp="20160926 12:01:10.822" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20160926 12:01:10.823" starttime="20160926 12:01:10.754"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:10.823" starttime="20160926 12:01:10.753"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${tests failed}</arg>
+<arg>Fail</arg>
+<arg>${failed count} QUnit tests failed.</arg>
+</arguments>
+<kw name="Fail" library="BuiltIn">
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<arguments>
+<arg>${failed count} QUnit tests failed.</arg>
+</arguments>
+<msg timestamp="20160926 12:01:10.825" level="FAIL">1 QUnit tests failed.</msg>
+<status status="FAIL" endtime="20160926 12:01:10.825" starttime="20160926 12:01:10.825"></status>
+</kw>
+<status status="FAIL" endtime="20160926 12:01:10.825" starttime="20160926 12:01:10.824"></status>
+</kw>
+<status status="FAIL" endtime="20160926 12:01:10.828" critical="yes" starttime="20160926 12:01:09.679">1 QUnit tests failed.</status>
+</test>
+<kw type="teardown" name="Stop Test Server" library="resource">
+<kw name="Terminate Process" library="Process">
+<doc>Stops the process gracefully or forcefully.</doc>
+<arguments>
+<arg>test_server</arg>
+</arguments>
+<msg timestamp="20160926 12:01:10.830" level="INFO">Gracefully terminating process.</msg>
+<msg timestamp="20160926 12:01:10.835" level="INFO">Process completed.</msg>
+<status status="PASS" endtime="20160926 12:01:10.835" starttime="20160926 12:01:10.830"></status>
+</kw>
+<kw name="Close Browser" library="Selenium2Library">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20160926 12:01:10.966" starttime="20160926 12:01:10.840"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:10.966" starttime="20160926 12:01:10.829"></status>
+</kw>
+<doc>Runner for the JavaScript QUnit tests.</doc>
+<status status="FAIL" endtime="20160926 12:01:10.966" starttime="20160926 12:00:27.685"></status>
+</suite>
+<suite source="/home/alex/swen302/StoryMapJS/robot_tests/storymaps.robot" id="s1-s2" name="Storymaps">
+<kw type="setup" name="Start Test Server" library="resource">
+<kw name="Start Process" library="Process">
+<doc>Starts a new process on background.</doc>
+<arguments>
+<arg>bash -c "source env.sh &amp;&amp; TEST_MODE\=on fab serve:port\=${PORT}"</arg>
+<arg>shell=yes</arg>
+<arg>stdout=${SERVER LOG}</arg>
+<arg>stderr=${SERVER LOG}</arg>
+<arg>alias=test_server</arg>
+</arguments>
+<msg timestamp="20160926 12:01:11.013" level="INFO">Starting process:
+bash -c "source env.sh &amp;&amp; TEST_MODE=on fab serve:port=5001"</msg>
+<status status="PASS" endtime="20160926 12:01:11.029" starttime="20160926 12:01:11.013"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3s</arg>
+</arguments>
+<msg timestamp="20160926 12:01:14.031" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" endtime="20160926 12:01:14.032" starttime="20160926 12:01:11.030"></status>
+</kw>
+<kw name="Open Browser To Homepage" library="resource">
+<kw name="Get Environment Variable" library="OperatingSystem">
+<doc>Returns the value of an environment variable with the given name.</doc>
+<arguments>
+<arg>BROWSER</arg>
+<arg>default=chrome</arg>
+</arguments>
+<assign>
+<var>${browser}</var>
+</assign>
+<msg timestamp="20160926 12:01:14.035" level="INFO">${browser} = firefox</msg>
+<status status="PASS" endtime="20160926 12:01:14.035" starttime="20160926 12:01:14.034"></status>
+</kw>
+<kw name="Open Browser" library="Selenium2Library">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>${SERVER}</arg>
+<arg>browser=${browser}</arg>
+</arguments>
+<msg timestamp="20160926 12:01:14.038" level="INFO">Opening browser 'firefox' to base url 'http://localhost:5001'</msg>
+<status status="PASS" endtime="20160926 12:01:28.494" starttime="20160926 12:01:14.036"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:28.494" starttime="20160926 12:01:14.032"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:28.494" starttime="20160926 12:01:11.012"></status>
+</kw>
+<test id="s1-s2-t1" name="Create StoryMap">
+<kw name="Go To Authoring Tool" library="resource">
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select/</arg>
+</arguments>
+<msg timestamp="20160926 12:01:28.496" level="INFO">Opening url 'http://localhost:5001/select/'</msg>
+<status status="PASS" endtime="20160926 12:01:29.893" starttime="20160926 12:01:28.496"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:29.894" starttime="20160926 12:01:28.495"></status>
+</kw>
+<kw name="Create StoryMap" library="resource">
+<arguments>
+<arg>Test</arg>
+</arguments>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:01:31.896" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:01:31.896" starttime="20160926 12:01:29.895"></status>
+</kw>
+<kw name="Create StoryMap Should Be Visible" library="resource">
+<kw name="Page Should Contain" library="Selenium2Library">
+<doc>Verifies that current page contains `text`.</doc>
+<arguments>
+<arg>Let's make a StoryMap.</arg>
+</arguments>
+<msg timestamp="20160926 12:01:31.983" level="INFO">Current page contains text 'Let's make a StoryMap.'.</msg>
+<status status="PASS" endtime="20160926 12:01:31.983" starttime="20160926 12:01:31.898"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:31.983" starttime="20160926 12:01:31.897"></status>
+</kw>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>css=input.entry-create-title</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:01:31.984" level="INFO">Typing text 'Test' into text field 'css=input.entry-create-title'</msg>
+<status status="PASS" endtime="20160926 12:01:32.092" starttime="20160926 12:01:31.983"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>id=entry_create</arg>
+</arguments>
+<msg timestamp="20160926 12:01:32.094" level="INFO">Clicking link 'id=entry_create'.</msg>
+<status status="PASS" endtime="20160926 12:01:33.054" starttime="20160926 12:01:32.094"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:01:35.059" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:01:35.059" starttime="20160926 12:01:33.055"></status>
+</kw>
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select</arg>
+</arguments>
+<msg timestamp="20160926 12:01:35.060" level="INFO">Opening url 'http://localhost:5001/select'</msg>
+<status status="PASS" endtime="20160926 12:01:35.278" starttime="20160926 12:01:35.059"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:01:37.279" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:01:37.280" starttime="20160926 12:01:35.279"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>${name}</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:01:37.281" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test'.</msg>
+<status status="PASS" endtime="20160926 12:01:37.401" starttime="20160926 12:01:37.280"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:37.401" starttime="20160926 12:01:37.280"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:37.401" starttime="20160926 12:01:29.894"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:37.402" critical="yes" starttime="20160926 12:01:28.495"></status>
+</test>
+<test id="s1-s2-t2" name="Delete StoryMap">
+<kw name="Go To Authoring Tool" library="resource">
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select/</arg>
+</arguments>
+<msg timestamp="20160926 12:01:37.404" level="INFO">Opening url 'http://localhost:5001/select/'</msg>
+<status status="PASS" endtime="20160926 12:01:39.186" starttime="20160926 12:01:37.404"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:39.186" starttime="20160926 12:01:37.403"></status>
+</kw>
+<kw name="Wait Until Loaded" library="resource">
+<kw name="Wait Until Element Is Not Visible" library="Selenium2Library">
+<doc>Waits until element specified with `locator` is not visible.</doc>
+<arguments>
+<arg>css=.icon-spinner</arg>
+</arguments>
+<status status="PASS" endtime="20160926 12:01:39.290" starttime="20160926 12:01:39.187"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:39.290" starttime="20160926 12:01:39.186"></status>
+</kw>
+<kw name="Delete StoryMap" library="resource">
+<arguments>
+<arg>test</arg>
+</arguments>
+<kw name="StoryMap Should Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:01:39.312" level="INFO">Current page contains element 'css=tr[storymap-data="test"]'.</msg>
+<status status="PASS" endtime="20160926 12:01:39.312" starttime="20160926 12:01:39.294"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:01:39.312" starttime="20160926 12:01:39.294"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"] td div div a</arg>
+</arguments>
+<msg timestamp="20160926 12:01:39.313" level="INFO">Clicking link 'css=tr[storymap-data="test"] td div div a'.</msg>
+<status status="PASS" endtime="20160926 12:01:39.506" starttime="20160926 12:01:39.312"></status>
+</kw>
+<kw name="Execute Javascript" library="Selenium2Library">
+<doc>Executes the given JavaScript code.</doc>
+<arguments>
+<arg>$(".dropdown.open a.list-item-delete").click()</arg>
+</arguments>
+<msg timestamp="20160926 12:01:39.506" level="INFO">Executing JavaScript:
+$(".dropdown.open a.list-item-delete").click()</msg>
+<status status="PASS" endtime="20160926 12:01:39.531" starttime="20160926 12:01:39.506"></status>
+</kw>
+<kw name="Click Button" library="Selenium2Library">
+<doc>Clicks a button identified by `locator`.</doc>
+<arguments>
+<arg>css=.modal-confirm button.btn-primary</arg>
+</arguments>
+<msg timestamp="20160926 12:01:39.532" level="INFO">Clicking button 'css=.modal-confirm button.btn-primary'.</msg>
+<status status="PASS" endtime="20160926 12:01:39.662" starttime="20160926 12:01:39.532"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:01:41.663" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:01:41.664" starttime="20160926 12:01:39.663"></status>
+</kw>
+<kw name="StoryMap Should Not Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Not Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is not found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:02:11.690" level="INFO">Current page does not contain element 'css=tr[storymap-data="test"]'.</msg>
+<status status="PASS" endtime="20160926 12:02:11.690" starttime="20160926 12:01:41.666"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:02:11.691" starttime="20160926 12:01:41.665"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:02:11.691" starttime="20160926 12:01:39.293"></status>
+</kw>
+<kw name="StoryMap Should Not Exist" library="resource">
+<arguments>
+<arg>Test</arg>
+</arguments>
+<kw name="Element Should Not Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` does not contain text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:02:11.692" level="INFO">Verifying element 'css=#entry_modal .modal-body' does not contain text 'Test'.</msg>
+<status status="PASS" endtime="20160926 12:02:11.778" starttime="20160926 12:02:11.692"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:02:11.778" starttime="20160926 12:02:11.691"></status>
+</kw>
+<kw name="StoryMap Should Not Exist ID" library="resource">
+<arguments>
+<arg>test</arg>
+</arguments>
+<kw name="Page Should Not Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is not found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:02:41.790" level="INFO">Current page does not contain element 'css=tr[storymap-data="test"]'.</msg>
+<status status="PASS" endtime="20160926 12:02:41.791" starttime="20160926 12:02:11.779"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:02:41.791" starttime="20160926 12:02:11.779"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:02:41.792" critical="yes" starttime="20160926 12:01:37.403"></status>
+</test>
+<test id="s1-s2-t3" name="Create And Delete Multiple StoryMaps">
+<kw name="Go To Authoring Tool" library="resource">
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select/</arg>
+</arguments>
+<msg timestamp="20160926 12:02:41.794" level="INFO">Opening url 'http://localhost:5001/select/'</msg>
+<status status="PASS" endtime="20160926 12:02:42.517" starttime="20160926 12:02:41.793"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:02:42.517" starttime="20160926 12:02:41.793"></status>
+</kw>
+<kw name="Create StoryMap" library="resource">
+<arguments>
+<arg>Test1</arg>
+</arguments>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:02:44.521" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:02:44.522" starttime="20160926 12:02:42.521"></status>
+</kw>
+<kw name="Create StoryMap Should Be Visible" library="resource">
+<kw name="Page Should Contain" library="Selenium2Library">
+<doc>Verifies that current page contains `text`.</doc>
+<arguments>
+<arg>Let's make a StoryMap.</arg>
+</arguments>
+<msg timestamp="20160926 12:02:44.547" level="INFO">Current page contains text 'Let's make a StoryMap.'.</msg>
+<status status="PASS" endtime="20160926 12:02:44.547" starttime="20160926 12:02:44.522"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:02:44.547" starttime="20160926 12:02:44.522"></status>
+</kw>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>css=input.entry-create-title</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:02:44.548" level="INFO">Typing text 'Test1' into text field 'css=input.entry-create-title'</msg>
+<status status="PASS" endtime="20160926 12:02:44.637" starttime="20160926 12:02:44.548"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>id=entry_create</arg>
+</arguments>
+<msg timestamp="20160926 12:02:44.638" level="INFO">Clicking link 'id=entry_create'.</msg>
+<status status="PASS" endtime="20160926 12:02:44.937" starttime="20160926 12:02:44.638"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:02:46.937" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:02:46.938" starttime="20160926 12:02:44.937"></status>
+</kw>
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select</arg>
+</arguments>
+<msg timestamp="20160926 12:02:46.938" level="INFO">Opening url 'http://localhost:5001/select'</msg>
+<status status="PASS" endtime="20160926 12:02:47.079" starttime="20160926 12:02:46.938"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:02:49.080" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:02:49.080" starttime="20160926 12:02:47.080"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>${name}</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:02:49.082" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test1'.</msg>
+<status status="PASS" endtime="20160926 12:02:49.252" starttime="20160926 12:02:49.081"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:02:49.252" starttime="20160926 12:02:49.081"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:02:49.253" starttime="20160926 12:02:42.520"></status>
+</kw>
+<kw name="Create Another StoryMap" library="resource">
+<arguments>
+<arg>Test2</arg>
+</arguments>
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select</arg>
+</arguments>
+<msg timestamp="20160926 12:02:49.254" level="INFO">Opening url 'http://localhost:5001/select'</msg>
+<status status="PASS" endtime="20160926 12:02:50.276" starttime="20160926 12:02:49.253"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:02:52.277" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:02:52.277" starttime="20160926 12:02:50.276"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>css=#new_storymap</arg>
+</arguments>
+<msg timestamp="20160926 12:02:52.277" level="INFO">Clicking link 'css=#new_storymap'.</msg>
+<status status="PASS" endtime="20160926 12:02:52.394" starttime="20160926 12:02:52.277"></status>
+</kw>
+<kw name="Create StoryMap" library="resource">
+<arguments>
+<arg>${name}</arg>
+</arguments>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:02:54.396" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:02:54.396" starttime="20160926 12:02:52.395"></status>
+</kw>
+<kw name="Create StoryMap Should Be Visible" library="resource">
+<kw name="Page Should Contain" library="Selenium2Library">
+<doc>Verifies that current page contains `text`.</doc>
+<arguments>
+<arg>Let's make a StoryMap.</arg>
+</arguments>
+<msg timestamp="20160926 12:02:54.458" level="INFO">Current page contains text 'Let's make a StoryMap.'.</msg>
+<status status="PASS" endtime="20160926 12:02:54.458" starttime="20160926 12:02:54.398"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:02:54.458" starttime="20160926 12:02:54.397"></status>
+</kw>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>css=input.entry-create-title</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:02:54.459" level="INFO">Typing text 'Test2' into text field 'css=input.entry-create-title'</msg>
+<status status="PASS" endtime="20160926 12:02:54.562" starttime="20160926 12:02:54.459"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>id=entry_create</arg>
+</arguments>
+<msg timestamp="20160926 12:02:54.563" level="INFO">Clicking link 'id=entry_create'.</msg>
+<status status="PASS" endtime="20160926 12:02:54.700" starttime="20160926 12:02:54.562"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:02:56.701" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:02:56.702" starttime="20160926 12:02:54.700"></status>
+</kw>
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select</arg>
+</arguments>
+<msg timestamp="20160926 12:02:56.703" level="INFO">Opening url 'http://localhost:5001/select'</msg>
+<status status="PASS" endtime="20160926 12:02:57.903" starttime="20160926 12:02:56.702"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:02:59.904" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:02:59.905" starttime="20160926 12:02:57.904"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>${name}</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:02:59.907" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test2'.</msg>
+<status status="PASS" endtime="20160926 12:03:00.393" starttime="20160926 12:02:59.907"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:03:00.394" starttime="20160926 12:02:59.905"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:03:00.394" starttime="20160926 12:02:52.394"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:03:00.397" starttime="20160926 12:02:49.253"></status>
+</kw>
+<kw name="Create Another StoryMap" library="resource">
+<arguments>
+<arg>SomeOtherVeryDifferentName</arg>
+</arguments>
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select</arg>
+</arguments>
+<msg timestamp="20160926 12:03:00.400" level="INFO">Opening url 'http://localhost:5001/select'</msg>
+<status status="PASS" endtime="20160926 12:03:01.783" starttime="20160926 12:03:00.399"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:03:03.784" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:03:03.785" starttime="20160926 12:03:01.784"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>css=#new_storymap</arg>
+</arguments>
+<msg timestamp="20160926 12:03:03.786" level="INFO">Clicking link 'css=#new_storymap'.</msg>
+<status status="PASS" endtime="20160926 12:03:03.891" starttime="20160926 12:03:03.785"></status>
+</kw>
+<kw name="Create StoryMap" library="resource">
+<arguments>
+<arg>${name}</arg>
+</arguments>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:03:05.892" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:03:05.892" starttime="20160926 12:03:03.891"></status>
+</kw>
+<kw name="Create StoryMap Should Be Visible" library="resource">
+<kw name="Page Should Contain" library="Selenium2Library">
+<doc>Verifies that current page contains `text`.</doc>
+<arguments>
+<arg>Let's make a StoryMap.</arg>
+</arguments>
+<msg timestamp="20160926 12:03:05.917" level="INFO">Current page contains text 'Let's make a StoryMap.'.</msg>
+<status status="PASS" endtime="20160926 12:03:05.917" starttime="20160926 12:03:05.893"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:03:05.917" starttime="20160926 12:03:05.893"></status>
+</kw>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>css=input.entry-create-title</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:03:05.918" level="INFO">Typing text 'SomeOtherVeryDifferentName' into text field 'css=input.entry-create-title'</msg>
+<status status="PASS" endtime="20160926 12:03:06.101" starttime="20160926 12:03:05.917"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>id=entry_create</arg>
+</arguments>
+<msg timestamp="20160926 12:03:06.102" level="INFO">Clicking link 'id=entry_create'.</msg>
+<status status="PASS" endtime="20160926 12:03:06.581" starttime="20160926 12:03:06.101"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:03:08.582" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:03:08.583" starttime="20160926 12:03:06.581"></status>
+</kw>
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select</arg>
+</arguments>
+<msg timestamp="20160926 12:03:08.583" level="INFO">Opening url 'http://localhost:5001/select'</msg>
+<status status="PASS" endtime="20160926 12:03:09.479" starttime="20160926 12:03:08.583"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:03:11.481" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:03:11.481" starttime="20160926 12:03:09.480"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>${name}</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:03:11.483" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'SomeOtherVeryDifferentName'.</msg>
+<status status="PASS" endtime="20160926 12:03:11.688" starttime="20160926 12:03:11.482"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:03:11.688" starttime="20160926 12:03:11.481"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:03:11.688" starttime="20160926 12:03:03.891"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:03:11.688" starttime="20160926 12:03:00.398"></status>
+</kw>
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select</arg>
+</arguments>
+<msg timestamp="20160926 12:03:11.689" level="INFO">Opening url 'http://localhost:5001/select'</msg>
+<status status="PASS" endtime="20160926 12:03:12.489" starttime="20160926 12:03:11.689"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:03:14.493" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:03:14.493" starttime="20160926 12:03:12.492"></status>
+</kw>
+<kw name="Delete StoryMap" library="resource">
+<arguments>
+<arg>test2</arg>
+</arguments>
+<kw name="StoryMap Should Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:03:14.505" level="INFO">Current page contains element 'css=tr[storymap-data="test2"]'.</msg>
+<status status="PASS" endtime="20160926 12:03:14.505" starttime="20160926 12:03:14.497"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:03:14.506" starttime="20160926 12:03:14.496"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"] td div div a</arg>
+</arguments>
+<msg timestamp="20160926 12:03:14.506" level="INFO">Clicking link 'css=tr[storymap-data="test2"] td div div a'.</msg>
+<status status="PASS" endtime="20160926 12:03:14.683" starttime="20160926 12:03:14.506"></status>
+</kw>
+<kw name="Execute Javascript" library="Selenium2Library">
+<doc>Executes the given JavaScript code.</doc>
+<arguments>
+<arg>$(".dropdown.open a.list-item-delete").click()</arg>
+</arguments>
+<msg timestamp="20160926 12:03:14.684" level="INFO">Executing JavaScript:
+$(".dropdown.open a.list-item-delete").click()</msg>
+<status status="PASS" endtime="20160926 12:03:14.712" starttime="20160926 12:03:14.683"></status>
+</kw>
+<kw name="Click Button" library="Selenium2Library">
+<doc>Clicks a button identified by `locator`.</doc>
+<arguments>
+<arg>css=.modal-confirm button.btn-primary</arg>
+</arguments>
+<msg timestamp="20160926 12:03:14.713" level="INFO">Clicking button 'css=.modal-confirm button.btn-primary'.</msg>
+<status status="PASS" endtime="20160926 12:03:14.946" starttime="20160926 12:03:14.713"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:03:16.947" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:03:16.948" starttime="20160926 12:03:14.946"></status>
+</kw>
+<kw name="StoryMap Should Not Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Not Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is not found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:03:46.976" level="INFO">Current page does not contain element 'css=tr[storymap-data="test2"]'.</msg>
+<status status="PASS" endtime="20160926 12:03:46.976" starttime="20160926 12:03:16.949"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:03:46.977" starttime="20160926 12:03:16.948"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:03:46.977" starttime="20160926 12:03:14.494"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>Test1</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:03:46.978" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test1'.</msg>
+<status status="PASS" endtime="20160926 12:03:47.143" starttime="20160926 12:03:46.977"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:03:47.143" starttime="20160926 12:03:46.977"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>SomeOtherVeryDifferentName</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:03:47.145" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'SomeOtherVeryDifferentName'.</msg>
+<status status="PASS" endtime="20160926 12:03:47.296" starttime="20160926 12:03:47.144"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:03:47.296" starttime="20160926 12:03:47.144"></status>
+</kw>
+<kw name="Delete StoryMap" library="resource">
+<arguments>
+<arg>someotherverydifferentname</arg>
+</arguments>
+<kw name="StoryMap Should Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:03:47.310" level="INFO">Current page contains element 'css=tr[storymap-data="someotherverydifferentname"]'.</msg>
+<status status="PASS" endtime="20160926 12:03:47.311" starttime="20160926 12:03:47.298"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:03:47.311" starttime="20160926 12:03:47.297"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"] td div div a</arg>
+</arguments>
+<msg timestamp="20160926 12:03:47.312" level="INFO">Clicking link 'css=tr[storymap-data="someotherverydifferentname"] td div div a'.</msg>
+<status status="PASS" endtime="20160926 12:03:47.474" starttime="20160926 12:03:47.311"></status>
+</kw>
+<kw name="Execute Javascript" library="Selenium2Library">
+<doc>Executes the given JavaScript code.</doc>
+<arguments>
+<arg>$(".dropdown.open a.list-item-delete").click()</arg>
+</arguments>
+<msg timestamp="20160926 12:03:47.475" level="INFO">Executing JavaScript:
+$(".dropdown.open a.list-item-delete").click()</msg>
+<status status="PASS" endtime="20160926 12:03:47.512" starttime="20160926 12:03:47.474"></status>
+</kw>
+<kw name="Click Button" library="Selenium2Library">
+<doc>Clicks a button identified by `locator`.</doc>
+<arguments>
+<arg>css=.modal-confirm button.btn-primary</arg>
+</arguments>
+<msg timestamp="20160926 12:03:47.513" level="INFO">Clicking button 'css=.modal-confirm button.btn-primary'.</msg>
+<status status="PASS" endtime="20160926 12:03:47.710" starttime="20160926 12:03:47.513"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:03:49.712" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:03:49.713" starttime="20160926 12:03:47.711"></status>
+</kw>
+<kw name="StoryMap Should Not Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Not Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is not found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:04:19.742" level="INFO">Current page does not contain element 'css=tr[storymap-data="someotherverydifferentname"]'.</msg>
+<status status="PASS" endtime="20160926 12:04:19.743" starttime="20160926 12:03:49.715"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:04:19.744" starttime="20160926 12:03:49.713"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:04:19.744" starttime="20160926 12:03:47.297"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>Test1</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:04:19.751" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test1'.</msg>
+<status status="PASS" endtime="20160926 12:04:19.905" starttime="20160926 12:04:19.749"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:04:19.905" starttime="20160926 12:04:19.745"></status>
+</kw>
+<kw name="Delete StoryMap" library="resource">
+<arguments>
+<arg>test1</arg>
+</arguments>
+<kw name="StoryMap Should Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:04:19.914" level="INFO">Current page contains element 'css=tr[storymap-data="test1"]'.</msg>
+<status status="PASS" endtime="20160926 12:04:19.914" starttime="20160926 12:04:19.906"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:04:19.914" starttime="20160926 12:04:19.906"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"] td div div a</arg>
+</arguments>
+<msg timestamp="20160926 12:04:19.916" level="INFO">Clicking link 'css=tr[storymap-data="test1"] td div div a'.</msg>
+<status status="PASS" endtime="20160926 12:04:20.041" starttime="20160926 12:04:19.915"></status>
+</kw>
+<kw name="Execute Javascript" library="Selenium2Library">
+<doc>Executes the given JavaScript code.</doc>
+<arguments>
+<arg>$(".dropdown.open a.list-item-delete").click()</arg>
+</arguments>
+<msg timestamp="20160926 12:04:20.042" level="INFO">Executing JavaScript:
+$(".dropdown.open a.list-item-delete").click()</msg>
+<status status="PASS" endtime="20160926 12:04:20.073" starttime="20160926 12:04:20.042"></status>
+</kw>
+<kw name="Click Button" library="Selenium2Library">
+<doc>Clicks a button identified by `locator`.</doc>
+<arguments>
+<arg>css=.modal-confirm button.btn-primary</arg>
+</arguments>
+<msg timestamp="20160926 12:04:20.074" level="INFO">Clicking button 'css=.modal-confirm button.btn-primary'.</msg>
+<status status="PASS" endtime="20160926 12:04:20.238" starttime="20160926 12:04:20.074"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:04:22.239" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:04:22.239" starttime="20160926 12:04:20.238"></status>
+</kw>
+<kw name="StoryMap Should Not Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Not Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is not found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:04:52.256" level="INFO">Current page does not contain element 'css=tr[storymap-data="test1"]'.</msg>
+<status status="PASS" endtime="20160926 12:04:52.257" starttime="20160926 12:04:22.240"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:04:52.257" starttime="20160926 12:04:22.240"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:04:52.257" starttime="20160926 12:04:19.906"></status>
+</kw>
+<kw name="StoryMap Should Not Exist" library="resource">
+<arguments>
+<arg>Test1</arg>
+</arguments>
+<kw name="Element Should Not Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` does not contain text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:04:52.258" level="INFO">Verifying element 'css=#entry_modal .modal-body' does not contain text 'Test1'.</msg>
+<status status="PASS" endtime="20160926 12:04:52.323" starttime="20160926 12:04:52.258"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:04:52.323" starttime="20160926 12:04:52.257"></status>
+</kw>
+<kw name="StoryMap Should Not Exist" library="resource">
+<arguments>
+<arg>Test2</arg>
+</arguments>
+<kw name="Element Should Not Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` does not contain text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:04:52.325" level="INFO">Verifying element 'css=#entry_modal .modal-body' does not contain text 'Test2'.</msg>
+<status status="PASS" endtime="20160926 12:04:52.391" starttime="20160926 12:04:52.324"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:04:52.391" starttime="20160926 12:04:52.324"></status>
+</kw>
+<kw name="StoryMap Should Not Exist" library="resource">
+<arguments>
+<arg>SomeOtherVeryDifferentName</arg>
+</arguments>
+<kw name="Element Should Not Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` does not contain text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:04:52.393" level="INFO">Verifying element 'css=#entry_modal .modal-body' does not contain text 'SomeOtherVeryDifferentName'.</msg>
+<status status="PASS" endtime="20160926 12:04:52.450" starttime="20160926 12:04:52.393"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:04:52.450" starttime="20160926 12:04:52.392"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:04:52.450" critical="yes" starttime="20160926 12:02:41.792"></status>
+</test>
+<test id="s1-s2-t4" name="Rename A StoryMap">
+<kw name="Go To Authoring Tool" library="resource">
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select/</arg>
+</arguments>
+<msg timestamp="20160926 12:04:52.452" level="INFO">Opening url 'http://localhost:5001/select/'</msg>
+<status status="PASS" endtime="20160926 12:04:53.961" starttime="20160926 12:04:52.452"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:04:53.961" starttime="20160926 12:04:52.452"></status>
+</kw>
+<kw name="Create StoryMap" library="resource">
+<arguments>
+<arg>Test1</arg>
+</arguments>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:04:55.964" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:04:55.964" starttime="20160926 12:04:53.963"></status>
+</kw>
+<kw name="Create StoryMap Should Be Visible" library="resource">
+<kw name="Page Should Contain" library="Selenium2Library">
+<doc>Verifies that current page contains `text`.</doc>
+<arguments>
+<arg>Let's make a StoryMap.</arg>
+</arguments>
+<msg timestamp="20160926 12:04:55.999" level="INFO">Current page contains text 'Let's make a StoryMap.'.</msg>
+<status status="PASS" endtime="20160926 12:04:56.000" starttime="20160926 12:04:55.966"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:04:56.000" starttime="20160926 12:04:55.965"></status>
+</kw>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>css=input.entry-create-title</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:04:56.001" level="INFO">Typing text 'Test1' into text field 'css=input.entry-create-title'</msg>
+<status status="PASS" endtime="20160926 12:04:56.089" starttime="20160926 12:04:56.000"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>id=entry_create</arg>
+</arguments>
+<msg timestamp="20160926 12:04:56.090" level="INFO">Clicking link 'id=entry_create'.</msg>
+<status status="PASS" endtime="20160926 12:04:56.256" starttime="20160926 12:04:56.089"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:04:58.259" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:04:58.261" starttime="20160926 12:04:56.256"></status>
+</kw>
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select</arg>
+</arguments>
+<msg timestamp="20160926 12:04:58.262" level="INFO">Opening url 'http://localhost:5001/select'</msg>
+<status status="PASS" endtime="20160926 12:05:00.325" starttime="20160926 12:04:58.261"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:05:02.329" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:05:02.330" starttime="20160926 12:05:00.328"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>${name}</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:05:02.331" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test1'.</msg>
+<status status="PASS" endtime="20160926 12:05:02.541" starttime="20160926 12:05:02.330"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:02.542" starttime="20160926 12:05:02.330"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:02.543" starttime="20160926 12:04:53.962"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>Test1</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:05:02.547" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test1'.</msg>
+<status status="PASS" endtime="20160926 12:05:02.688" starttime="20160926 12:05:02.545"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:02.689" starttime="20160926 12:05:02.544"></status>
+</kw>
+<kw name="Rename StoryMap" library="resource">
+<arguments>
+<arg>Test1</arg>
+<arg>Test2</arg>
+</arguments>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>${oldName}</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:05:02.690" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test1'.</msg>
+<status status="PASS" endtime="20160926 12:05:02.823" starttime="20160926 12:05:02.690"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:02.824" starttime="20160926 12:05:02.689"></status>
+</kw>
+<kw name="Convert To Lowercase" library="String">
+<doc>Converts string to lowercase.</doc>
+<arguments>
+<arg>${oldName}</arg>
+</arguments>
+<assign>
+<var>${id}</var>
+</assign>
+<msg timestamp="20160926 12:05:02.824" level="INFO">${id} = test1</msg>
+<status status="PASS" endtime="20160926 12:05:02.824" starttime="20160926 12:05:02.824"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"] td div div a</arg>
+</arguments>
+<msg timestamp="20160926 12:05:02.825" level="INFO">Clicking link 'css=tr[storymap-data="test1"] td div div a'.</msg>
+<status status="PASS" endtime="20160926 12:05:03.020" starttime="20160926 12:05:02.824"></status>
+</kw>
+<kw name="Execute Javascript" library="Selenium2Library">
+<doc>Executes the given JavaScript code.</doc>
+<arguments>
+<arg>$(".dropdown.open a.list-item-rename").click()</arg>
+</arguments>
+<msg timestamp="20160926 12:05:03.021" level="INFO">Executing JavaScript:
+$(".dropdown.open a.list-item-rename").click()</msg>
+<status status="PASS" endtime="20160926 12:05:03.096" starttime="20160926 12:05:03.021"></status>
+</kw>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>css=.entry-rename-title</arg>
+<arg>${newName}</arg>
+</arguments>
+<msg timestamp="20160926 12:05:03.097" level="INFO">Typing text 'Test2' into text field 'css=.entry-rename-title'</msg>
+<status status="PASS" endtime="20160926 12:05:03.318" starttime="20160926 12:05:03.097"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>css=#entry_rename</arg>
+</arguments>
+<msg timestamp="20160926 12:05:03.319" level="INFO">Clicking link 'css=#entry_rename'.</msg>
+<status status="PASS" endtime="20160926 12:05:03.511" starttime="20160926 12:05:03.319"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:05:05.512" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:05:05.513" starttime="20160926 12:05:03.511"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:05.513" starttime="20160926 12:05:02.689"></status>
+</kw>
+<kw name="StoryMap Should Not Exist" library="resource">
+<arguments>
+<arg>Test1</arg>
+</arguments>
+<kw name="Element Should Not Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` does not contain text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:05:05.516" level="INFO">Verifying element 'css=#entry_modal .modal-body' does not contain text 'Test1'.</msg>
+<status status="PASS" endtime="20160926 12:05:06.217" starttime="20160926 12:05:05.515"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:06.218" starttime="20160926 12:05:05.514"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>Test2</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:05:06.224" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test2'.</msg>
+<status status="PASS" endtime="20160926 12:05:06.548" starttime="20160926 12:05:06.223"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:06.548" starttime="20160926 12:05:06.221"></status>
+</kw>
+<kw name="Delete StoryMap" library="resource">
+<arguments>
+<arg>test1</arg>
+</arguments>
+<kw name="StoryMap Should Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:05:06.568" level="INFO">Current page contains element 'css=tr[storymap-data="test1"]'.</msg>
+<status status="PASS" endtime="20160926 12:05:06.568" starttime="20160926 12:05:06.550"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:06.569" starttime="20160926 12:05:06.549"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"] td div div a</arg>
+</arguments>
+<msg timestamp="20160926 12:05:06.570" level="INFO">Clicking link 'css=tr[storymap-data="test1"] td div div a'.</msg>
+<status status="PASS" endtime="20160926 12:05:06.794" starttime="20160926 12:05:06.569"></status>
+</kw>
+<kw name="Execute Javascript" library="Selenium2Library">
+<doc>Executes the given JavaScript code.</doc>
+<arguments>
+<arg>$(".dropdown.open a.list-item-delete").click()</arg>
+</arguments>
+<msg timestamp="20160926 12:05:06.795" level="INFO">Executing JavaScript:
+$(".dropdown.open a.list-item-delete").click()</msg>
+<status status="PASS" endtime="20160926 12:05:06.836" starttime="20160926 12:05:06.795"></status>
+</kw>
+<kw name="Click Button" library="Selenium2Library">
+<doc>Clicks a button identified by `locator`.</doc>
+<arguments>
+<arg>css=.modal-confirm button.btn-primary</arg>
+</arguments>
+<msg timestamp="20160926 12:05:06.837" level="INFO">Clicking button 'css=.modal-confirm button.btn-primary'.</msg>
+<status status="PASS" endtime="20160926 12:05:07.257" starttime="20160926 12:05:06.837"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:05:09.270" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:05:09.270" starttime="20160926 12:05:07.268"></status>
+</kw>
+<kw name="StoryMap Should Not Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Not Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is not found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:05:39.295" level="INFO">Current page does not contain element 'css=tr[storymap-data="test1"]'.</msg>
+<status status="PASS" endtime="20160926 12:05:39.296" starttime="20160926 12:05:09.271"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:39.296" starttime="20160926 12:05:09.270"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:39.296" starttime="20160926 12:05:06.549"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:39.296" critical="yes" starttime="20160926 12:04:52.451"></status>
+</test>
+<test id="s1-s2-t5" name="Copy A StoryMap">
+<kw name="Go To Authoring Tool" library="resource">
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select/</arg>
+</arguments>
+<msg timestamp="20160926 12:05:39.305" level="INFO">Opening url 'http://localhost:5001/select/'</msg>
+<status status="PASS" endtime="20160926 12:05:40.030" starttime="20160926 12:05:39.304"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:40.030" starttime="20160926 12:05:39.303"></status>
+</kw>
+<kw name="Create StoryMap" library="resource">
+<arguments>
+<arg>Test1</arg>
+</arguments>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:05:42.036" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:05:42.037" starttime="20160926 12:05:40.035"></status>
+</kw>
+<kw name="Create StoryMap Should Be Visible" library="resource">
+<kw name="Page Should Contain" library="Selenium2Library">
+<doc>Verifies that current page contains `text`.</doc>
+<arguments>
+<arg>Let's make a StoryMap.</arg>
+</arguments>
+<msg timestamp="20160926 12:05:42.080" level="INFO">Current page contains text 'Let's make a StoryMap.'.</msg>
+<status status="PASS" endtime="20160926 12:05:42.080" starttime="20160926 12:05:42.038"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:42.080" starttime="20160926 12:05:42.037"></status>
+</kw>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>css=input.entry-create-title</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:05:42.081" level="INFO">Typing text 'Test1' into text field 'css=input.entry-create-title'</msg>
+<status status="PASS" endtime="20160926 12:05:42.181" starttime="20160926 12:05:42.081"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>id=entry_create</arg>
+</arguments>
+<msg timestamp="20160926 12:05:42.181" level="INFO">Clicking link 'id=entry_create'.</msg>
+<status status="PASS" endtime="20160926 12:05:42.471" starttime="20160926 12:05:42.181"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:05:44.475" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:05:44.476" starttime="20160926 12:05:42.474"></status>
+</kw>
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${SERVER}/select</arg>
+</arguments>
+<msg timestamp="20160926 12:05:44.476" level="INFO">Opening url 'http://localhost:5001/select'</msg>
+<status status="PASS" endtime="20160926 12:05:45.106" starttime="20160926 12:05:44.476"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:05:47.107" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:05:47.108" starttime="20160926 12:05:45.106"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>${name}</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:05:47.111" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test1'.</msg>
+<status status="PASS" endtime="20160926 12:05:47.250" starttime="20160926 12:05:47.110"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:47.251" starttime="20160926 12:05:47.108"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:47.251" starttime="20160926 12:05:40.035"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>Test1</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:05:47.252" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test1'.</msg>
+<status status="PASS" endtime="20160926 12:05:47.365" starttime="20160926 12:05:47.252"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:47.365" starttime="20160926 12:05:47.251"></status>
+</kw>
+<kw name="Copy StoryMap" library="resource">
+<arguments>
+<arg>Test1</arg>
+<arg>Test2</arg>
+</arguments>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>${oldName}</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:05:47.367" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test1'.</msg>
+<status status="PASS" endtime="20160926 12:05:47.473" starttime="20160926 12:05:47.367"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:47.473" starttime="20160926 12:05:47.366"></status>
+</kw>
+<kw name="Convert To Lowercase" library="String">
+<doc>Converts string to lowercase.</doc>
+<arguments>
+<arg>${oldName}</arg>
+</arguments>
+<assign>
+<var>${id}</var>
+</assign>
+<msg timestamp="20160926 12:05:47.474" level="INFO">${id} = test1</msg>
+<status status="PASS" endtime="20160926 12:05:47.474" starttime="20160926 12:05:47.474"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"] td div div a</arg>
+</arguments>
+<msg timestamp="20160926 12:05:47.475" level="INFO">Clicking link 'css=tr[storymap-data="test1"] td div div a'.</msg>
+<status status="PASS" endtime="20160926 12:05:47.621" starttime="20160926 12:05:47.474"></status>
+</kw>
+<kw name="Execute Javascript" library="Selenium2Library">
+<doc>Executes the given JavaScript code.</doc>
+<arguments>
+<arg>$(".dropdown.open a.list-item-copy").click()</arg>
+</arguments>
+<msg timestamp="20160926 12:05:47.621" level="INFO">Executing JavaScript:
+$(".dropdown.open a.list-item-copy").click()</msg>
+<status status="PASS" endtime="20160926 12:05:47.660" starttime="20160926 12:05:47.621"></status>
+</kw>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>css=.entry-copy-title</arg>
+<arg>${newName}</arg>
+</arguments>
+<msg timestamp="20160926 12:05:47.661" level="INFO">Typing text 'Test2' into text field 'css=.entry-copy-title'</msg>
+<status status="PASS" endtime="20160926 12:05:47.745" starttime="20160926 12:05:47.661"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>css=#entry_copy</arg>
+</arguments>
+<msg timestamp="20160926 12:05:47.746" level="INFO">Clicking link 'css=#entry_copy'.</msg>
+<status status="PASS" endtime="20160926 12:05:47.881" starttime="20160926 12:05:47.746"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:05:49.882" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:05:49.883" starttime="20160926 12:05:47.882"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:49.884" starttime="20160926 12:05:47.366"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>Test1</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:05:49.891" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test1'.</msg>
+<status status="PASS" endtime="20160926 12:05:50.096" starttime="20160926 12:05:49.889"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:50.096" starttime="20160926 12:05:49.885"></status>
+</kw>
+<kw name="StoryMap Should Exist" library="resource">
+<arguments>
+<arg>Test2</arg>
+</arguments>
+<kw name="Element Should Contain" library="Selenium2Library">
+<doc>Verifies element identified by `locator` contains text `expected`.</doc>
+<arguments>
+<arg>css=#entry_modal .modal-body</arg>
+<arg>${name}</arg>
+</arguments>
+<msg timestamp="20160926 12:05:50.097" level="INFO">Verifying element 'css=#entry_modal .modal-body' contains text 'Test2'.</msg>
+<status status="PASS" endtime="20160926 12:05:50.281" starttime="20160926 12:05:50.097"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:50.281" starttime="20160926 12:05:50.096"></status>
+</kw>
+<kw name="Delete StoryMap" library="resource">
+<arguments>
+<arg>test1</arg>
+</arguments>
+<kw name="StoryMap Should Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:05:50.292" level="INFO">Current page contains element 'css=tr[storymap-data="test1"]'.</msg>
+<status status="PASS" endtime="20160926 12:05:50.292" starttime="20160926 12:05:50.282"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:05:50.292" starttime="20160926 12:05:50.282"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"] td div div a</arg>
+</arguments>
+<msg timestamp="20160926 12:05:50.293" level="INFO">Clicking link 'css=tr[storymap-data="test1"] td div div a'.</msg>
+<status status="PASS" endtime="20160926 12:05:50.398" starttime="20160926 12:05:50.293"></status>
+</kw>
+<kw name="Execute Javascript" library="Selenium2Library">
+<doc>Executes the given JavaScript code.</doc>
+<arguments>
+<arg>$(".dropdown.open a.list-item-delete").click()</arg>
+</arguments>
+<msg timestamp="20160926 12:05:50.398" level="INFO">Executing JavaScript:
+$(".dropdown.open a.list-item-delete").click()</msg>
+<status status="PASS" endtime="20160926 12:05:50.427" starttime="20160926 12:05:50.398"></status>
+</kw>
+<kw name="Click Button" library="Selenium2Library">
+<doc>Clicks a button identified by `locator`.</doc>
+<arguments>
+<arg>css=.modal-confirm button.btn-primary</arg>
+</arguments>
+<msg timestamp="20160926 12:05:50.428" level="INFO">Clicking button 'css=.modal-confirm button.btn-primary'.</msg>
+<status status="PASS" endtime="20160926 12:05:50.584" starttime="20160926 12:05:50.427"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:05:52.584" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:05:52.585" starttime="20160926 12:05:50.584"></status>
+</kw>
+<kw name="StoryMap Should Not Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Not Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is not found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:06:22.610" level="INFO">Current page does not contain element 'css=tr[storymap-data="test1"]'.</msg>
+<status status="PASS" endtime="20160926 12:06:22.611" starttime="20160926 12:05:52.585"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:06:22.611" starttime="20160926 12:05:52.585"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:06:22.612" starttime="20160926 12:05:50.281"></status>
+</kw>
+<kw name="Delete StoryMap" library="resource">
+<arguments>
+<arg>test2</arg>
+</arguments>
+<kw name="StoryMap Should Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:06:22.636" level="INFO">Current page contains element 'css=tr[storymap-data="test2"]'.</msg>
+<status status="PASS" endtime="20160926 12:06:22.636" starttime="20160926 12:06:22.618"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:06:22.636" starttime="20160926 12:06:22.614"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by locator.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"] td div div a</arg>
+</arguments>
+<msg timestamp="20160926 12:06:22.637" level="INFO">Clicking link 'css=tr[storymap-data="test2"] td div div a'.</msg>
+<status status="PASS" endtime="20160926 12:06:22.782" starttime="20160926 12:06:22.637"></status>
+</kw>
+<kw name="Execute Javascript" library="Selenium2Library">
+<doc>Executes the given JavaScript code.</doc>
+<arguments>
+<arg>$(".dropdown.open a.list-item-delete").click()</arg>
+</arguments>
+<msg timestamp="20160926 12:06:22.783" level="INFO">Executing JavaScript:
+$(".dropdown.open a.list-item-delete").click()</msg>
+<status status="PASS" endtime="20160926 12:06:22.828" starttime="20160926 12:06:22.782"></status>
+</kw>
+<kw name="Click Button" library="Selenium2Library">
+<doc>Clicks a button identified by `locator`.</doc>
+<arguments>
+<arg>css=.modal-confirm button.btn-primary</arg>
+</arguments>
+<msg timestamp="20160926 12:06:22.829" level="INFO">Clicking button 'css=.modal-confirm button.btn-primary'.</msg>
+<status status="PASS" endtime="20160926 12:06:23.019" starttime="20160926 12:06:22.829"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2sec</arg>
+</arguments>
+<msg timestamp="20160926 12:06:25.020" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160926 12:06:25.021" starttime="20160926 12:06:23.020"></status>
+</kw>
+<kw name="StoryMap Should Not Exist ID" library="resource">
+<arguments>
+<arg>${id}</arg>
+</arguments>
+<kw name="Page Should Not Contain Element" library="Selenium2Library">
+<doc>Verifies element identified by `locator` is not found on the current page.</doc>
+<arguments>
+<arg>css=tr[storymap-data="${id}"]</arg>
+</arguments>
+<msg timestamp="20160926 12:06:55.042" level="INFO">Current page does not contain element 'css=tr[storymap-data="test2"]'.</msg>
+<status status="PASS" endtime="20160926 12:06:55.042" starttime="20160926 12:06:25.022"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:06:55.043" starttime="20160926 12:06:25.021"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:06:55.043" starttime="20160926 12:06:22.613"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:06:55.044" critical="yes" starttime="20160926 12:05:39.297"></status>
+</test>
+<kw type="teardown" name="Stop Test Server" library="resource">
+<kw name="Terminate Process" library="Process">
+<doc>Stops the process gracefully or forcefully.</doc>
+<arguments>
+<arg>test_server</arg>
+</arguments>
+<msg timestamp="20160926 12:06:55.052" level="INFO">Gracefully terminating process.</msg>
+<msg timestamp="20160926 12:06:55.158" level="INFO">Process completed.</msg>
+<status status="PASS" endtime="20160926 12:06:55.158" starttime="20160926 12:06:55.051"></status>
+</kw>
+<kw name="Close Browser" library="Selenium2Library">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20160926 12:06:55.262" starttime="20160926 12:06:55.158"></status>
+</kw>
+<status status="PASS" endtime="20160926 12:06:55.263" starttime="20160926 12:06:55.051"></status>
+</kw>
+<doc>Suite of tests for creating, updating and deleting new storymaps.</doc>
+<status status="PASS" endtime="20160926 12:06:55.263" starttime="20160926 12:01:10.984"></status>
+</suite>
+<status status="FAIL" endtime="20160926 12:06:55.274" starttime="20160926 12:00:27.616"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="1" pass="5">Critical Tests</stat>
+<stat fail="1" pass="5">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="1" id="s1" name="Robot Tests" pass="5">Robot Tests</stat>
+<stat fail="1" id="s1-s1" name="Qunit" pass="0">Robot Tests.Qunit</stat>
+<stat fail="0" id="s1-s2" name="Storymaps" pass="5">Robot Tests.Storymaps</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

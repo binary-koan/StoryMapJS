@@ -52,3 +52,20 @@ Copy A StoryMap
     StoryMap Should Exist  Test2
     Delete StoryMap  test1
     Delete StoryMap  test2
+
+Edit A StoryMap
+    Open Browser To Authoring Tool
+    Create StoryMap  Test
+    StoryMap Should Exist  Test
+    Edit StoryMap  Test
+    Create New StoryMap Slide
+    Edit StoryMap Fields  Location slide  Body Text
+    Edit StoryMap Slide Location  Victora University of Wellington, New Zealand
+    Click Preview Button
+    Click Back To Beginning
+    Page Should Contain  Test
+    Click Next Slide
+    Page Should Contain  slide
+    Page Should Contain  Body Text
+    Go To  ${SERVER}/select
+    Delete StoryMap  Test

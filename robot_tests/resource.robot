@@ -36,6 +36,7 @@ Create StoryMap
     Input Text  css=input.entry-create-title  ${name}
     Click Link  id=entry_create
     Sleep  2sec
+    Wait Until Loaded
     Go To  ${SERVER}/select
     Sleep  2sec
     StoryMap Should Exist  ${name}
@@ -102,6 +103,39 @@ Copy StoryMap
     Input Text  css=.entry-copy-title  ${newName}
     Click Link  css=#entry_copy
     Sleep  2sec
+
+Edit StoryMap
+    [Arguments]  ${name}
+    ${id} =  Convert To Lowercase  ${name}
+    Click Link  css=tr[storymap-data="${id}"] td a.title
+    Edit StoryMap Fields  ${name}  Test title slide
+
+Create New StoryMap Slide
+    Click Element  css=div#storymap_add_slide.slides-add
+
+Edit StoryMap Fields
+    [Arguments]  ${headline}  ${body}
+    Wait Until Loaded
+    Input Text  css=#headline  ${headline}
+    Select Frame  css=#edit iframe
+    Input Text  css=.wysihtml5-editor  ${body}
+    Unselect Frame
+
+Edit StoryMap Slide Location
+    [Arguments]  ${location}
+    Sleep  2sec
+    Input Text  css=#map_search_input  ${location}
+    #\\13 is the code for the enter key
+    Press Key  css=#map_search_input  \\13
+
+Click Back To Beginning
+    Click Element  xpath=//*[@id="preview_embed"]/div[1]/span[2]
+
+Click Preview Button
+    Click Element  xpath=//*[@id="tabs"]/li[2]/a
+
+Click Next Slide
+    Click Element  css=.vco-slidenav-next div div.vco-slidenav-icon
 
 Wait Until Loaded
     Wait Until Element Is Not Visible  css=.icon-spinner
