@@ -419,7 +419,7 @@ def storymap_copy(user, id):
 
         src_key_list, more = storage.list_keys(src_key_prefix, 999, '')
         for src_key in src_key_list:
-            file_name = src_key.name.split(src_key_prefix)[-1]
+            file_name = src_key.key.split(src_key_prefix)[-1]
             dst_key_name = "%s%s" % (dst_key_prefix, file_name)
 
             if file_name.endswith('.json'):
@@ -427,7 +427,7 @@ def storymap_copy(user, id):
                 storage.save_json(dst_key_name,
                     src_re.sub(dst_key_prefix, json_string))
             else:
-                storage.copy_key(src_key.name, dst_key_name)
+                storage.copy_key(src_key.key, dst_key_name)
 
         # Update meta
         user['storymaps'][dst_id] = {
