@@ -140,6 +140,7 @@ _language_library['en'] = VCO.Language;
 
 function storymap_url(uid, id, filename) {
     return "{{ STORAGE_URL }}"+[uid, id, filename].join('/');
+    console.log("{{ STORAGE_URL }}");
 }
 
 function storymap_image_url(uid, id, filename) {
@@ -256,6 +257,8 @@ function slide_select(event) {
                 }
             }
 
+            $('#marker_options').attr('disabled',true);
+
             _map.setDefaultView();
 
             if(!get_map_as_image()) {
@@ -264,6 +267,7 @@ function slide_select(event) {
         } else {
             // Show slide view
             $('#map_info, #map_overlay').hide();
+            $('#marker_options').attr('disabled',false);
 
             if(_storymap_data.storymap.zoomify) {
                 $('#map_search_input').hide();
@@ -1197,30 +1201,28 @@ $(function() {
         storymap_dirty(1);
     });
 
-    modal_init($('#slide_opt_modal'))
+    modal_init($('#slide_opt_modal')) 
         .on('upload', function(event, url) {
-            $(this).trigger('refresh_background_select');
+            $(this).trigger('refresh_image_select');
             $('#background_url').val(url).change();
             $(this).find('.upload-panel').trigger('reset');
         })
-        // need to add one of these for markers
-        .on('refresh_background_select', function(event) {
+        .on('refresh_image_select', function(event) {
             var html = '';
             for(var i = 0; i < _storymap_files.length; i++) {
                 html += '<li><a href="javascript:">'+_storymap_files[i]+'</a></li>';
             }
-            $('#background_image_select').html(html || '<li class="default">no uploaded images found</li>');
+            $('.image-select').html(html || '<li class="default">no uploaded images found</li>');
         })
         .on('modal_show', function(event, error_msg) {
             var background = _slides[_current_slide_index].background || {};
-
             var color = background.color || '';
             var opacity = (background.opacity || 100) / 100;
             var url = background.url || '';
-				// need vars for markers
-				
+
             $('#background_color').minicolors('value', color);
             $('#background_color').minicolors('opacity', opacity);
+
 
             if(color) {
                 $('#background_color_clear').show();
@@ -1228,17 +1230,63 @@ $(function() {
                 $('#background_color_clear').hide();
             }
 
-            $(this).trigger('refresh_background_select');
+            $(this).trigger('refresh_image_select');
 
             $('#background_image_select a').click(function(event) {
                 $('#background_url')
                     .val(storymap_image_url(_user.uid, _storymap_meta.id, $(this).html()))
                     .change();
+                    console.log("change background url");
             });
 
             $('#background_url').val(url);
-            // fill marker_url field
+            
+            $(this).find('.upload-panel').trigger('reset');
+            $(this).trigger('reset', error_msg);
+        })
+        .on('show', function() {
+            $(this).trigger('modal_show');
+        });
+        
+// ------------------------------------------------------------
+// Markers
+// ------------------------------------------------------------
+    
+    $('#marker_url').change(function(event) {
+          var old = _slides[_current_slide_index].location.icon;
+        _slides[_current_slide_index].location.icon = $(this).val().trim();
+        console.log("TEST, "+ (old || 'no image') +" => "+ $(this).val().trim());
+        storymap_dirty(1);
+    });
 
+    modal_init($('#marker_opt_modal'))
+        .on('upload', function(event, url) {
+            $(this).trigger('refresh_image_select');
+            $('#marker_url').val(url).change();
+            $(this).find('.upload-panel').trigger('reset');
+        }) 
+        .on('refresh_image_select', function(event) {
+            var html = '';
+            for(var i = 0; i < _storymap_files.length; i++) {
+                html += '<li><a href="javascript:">'+_storymap_files[i]+'</a></li>'; // TODO: find a nicer way of trimming these (local doesn't look nice)
+            }
+            $('.image-select').html(html || '<li class="default">no uploaded images found</li>');
+        })
+        .on('modal_show', function(event, error_msg) {
+                // need vars for markers
+                var marker = _slides[_current_slide_index].location.icon;
+                // TODO: disable/enable custom marker checkbox
+            $(this).trigger('refresh_image_select');
+
+            $('#marker_image_select a').click(function(event) {
+                $('#marker_url')
+                    .val(storymap_image_url(_user.uid, _storymap_meta.id, $(this).html()))
+                    .change();
+                    console.log("change marker url");
+            });
+
+            $('#marker_url').val(marker);
+            
             $(this).find('.upload-panel').trigger('reset');
             $(this).trigger('reset', error_msg);
         })
@@ -1287,12 +1335,12 @@ $(function() {
                 }
             );
         })
-        .on('upload', function(event, url) {
+        .on('upload', function(event, url) {  
             $(this).trigger('refresh_image_select');
             $('#share_image_url').val(url).change();
             $(this).find('.upload-panel').trigger('reset');
         })
-        .on('refresh_image_select', function(event) {
+        .on('refresh_image_select', function(event) { // gets new images
             var html = '';
             for(var i = 0; i < _storymap_files.length; i++) {
                 html += '<li><a href="javascript:">'+_storymap_files[i]+'</a></li>';
