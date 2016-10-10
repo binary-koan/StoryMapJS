@@ -15,12 +15,9 @@ import botocore
 from botocore.client import ClientError
 from botocore.client import Config
 from moto import mock_s3
-<<<<<<< 1d7a38284be7bb08a6dbd060121f4a5b17c9271e
 from boto.exception import S3ResponseError
 from boto.s3.connection import OrdinaryCallingFormat
-=======
 from cStringIO import StringIO
->>>>>>> Change use of aws to a local minio server.
 import requests
 
 # Get settings module

@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation  Reusable keywords and variables for the StoryMap server.
-Library        Selenium2Library  timeout=5  implicit_wait=30
+Library        Selenium2Library  timeout=5  implicit_wait=5
 Library        OperatingSystem
 Library        Process
 Library        String
@@ -9,7 +9,6 @@ Library        String
 ${PORT}        5001
 ${SERVER}      http://localhost:${PORT}
 ${SERVER LOG}  ${OUTPUT DIR}/server.log
-${BROWSER}     Firefox
 ${DELAY}       0
 ${ROOT URL}    ${SERVER}/select/
 
@@ -31,7 +30,7 @@ Stop Test Server
     Close Browser
 
 Open Browser To Authoring Tool
-    Open Browser  ${SERVER}/select/  chrome  http://127.0.0.1:4444/wd/hub
+    Detect And Open Browser  ${SERVER}/select/
     Maximize Browser Window
     Set Selenium Speed  ${DELAY}
     Authoring Tool Should Be Open
