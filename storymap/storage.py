@@ -29,6 +29,8 @@ if settings.TEST_MODE:
     _mock.start()
 
     _conn = boto3.resource('s3')
+    _conn.create_bucket(Bucket=settings.AWS_STORAGE_BUCKET_NAME, CreateBucketConfiguration={
+    'LocationConstraint': settings.AWS_REGION_NAME})
     _bucket = _conn.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
 
     _mock.stop()
@@ -110,7 +112,7 @@ def list_keys(key_prefix, n, marker=''):
 
 @_mock_in_test_mode
 def get_contents_as_string(src_key):
-    return src_key.get_contents_as_string()
+    return src_key.get()["Body"].read().decode("utf-8")
 
 @_mock_in_test_mode
 def all_keys():
@@ -145,8 +147,9 @@ def copy_key(src_key_name, dst_key_name):
     """
     Copy from src_key_name to dst_key_name
     """
-    dst_key = _bucket.copy_key(dst_key_name, _bucket.name, src_key_name)
-    dst_key.set_acl('public-read')
+    _bucket.copy({ 'Bucket': settings.AWS_STORAGE_BUCKET_NAME,
+                            'Key': src_key_name }, dst_key_name)
+    _bucket.Object(dst_key_name).Acl().put(ACL='public-read')
 
 @_reraise_s3response
 @_mock_in_test_mode

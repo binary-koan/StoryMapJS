@@ -47,6 +47,16 @@ _GOOGLE_OAUTH_SCOPES = [
     'https://www.googleapis.com/auth/userinfo.profile'
 ];
 
+def bucket_url():
+    bucket_url = settings.AWS_STORAGE_BUCKET_URL
+    if not bucket_url.endswith('/'):
+        bucket_url += '/'
+    bucket_url += settings.AWS_STORAGE_BUCKET_NAME
+    if not bucket_url.endswith('/'):
+        bucket_url += '/'
+
+    return bucket_url
+
 @app.context_processor
 def inject_urls():
     """
@@ -57,9 +67,7 @@ def inject_urls():
     if not static_url.endswith('/'):
         static_url += '/'
 
-    storage_url = settings.AWS_STORAGE_BUCKET_URL
-    if not storage_url.endswith('/'):
-        storage_url += '/'
+    storage_url = bucket_url()
     storage_url += settings.AWS_STORAGE_BUCKET_KEY
     if not storage_url.endswith('/'):
         storage_url += '/'
@@ -348,8 +356,8 @@ def _write_embed(embed_key_name, json_key_name, meta):
 
     # NOTE: facebook needs the protocol on embed_url and image_url for og tag
     content = render_template('_embed.html',
-        embed_url=_fix_url_for_opengraph(settings.AWS_STORAGE_BUCKET_URL+embed_key_name),
-        json_url=urllib.quote(settings.AWS_STORAGE_BUCKET_URL+json_key_name),
+        embed_url=_fix_url_for_opengraph(bucket_url()+embed_key_name),
+        json_url=urllib.quote(bucket_url()+json_key_name),
         title=meta.get('title', ''),
         description=meta.get('description', ''),
         image_url=_fix_url_for_opengraph(image_url)
@@ -411,7 +419,7 @@ def storymap_copy(user, id):
 
         src_key_list, more = storage.list_keys(src_key_prefix, 999, '')
         for src_key in src_key_list:
-            file_name = src_key.name.split(src_key_prefix)[-1]
+            file_name = src_key.key.split(src_key_prefix)[-1]
             dst_key_name = "%s%s" % (dst_key_prefix, file_name)
 
             if file_name.endswith('.json'):
@@ -419,7 +427,7 @@ def storymap_copy(user, id):
                 storage.save_json(dst_key_name,
                     src_re.sub(dst_key_prefix, json_string))
             else:
-                storage.copy_key(src_key.name, dst_key_name)
+                storage.copy_key(src_key.key, dst_key_name)
 
         # Update meta
         user['storymaps'][dst_id] = {
@@ -538,7 +546,7 @@ def storymap_migrate(user):
 
         dst_id = _make_storymap_id(user, title)
         dst_key_prefix = storage.key_prefix(user['uid'], dst_id)
-        dst_url = settings.AWS_STORAGE_BUCKET_URL+dst_key_prefix
+        dst_url = bucket_url()+dst_key_prefix
         dst_img_url = dst_url+'_images/'
 
         re_img = re.compile(r'.*\.(png|gif|jpg|jpeg)$', re.I)
@@ -680,7 +688,7 @@ def storymap_image_save(user, id):
         key_name = storage.key_name(user['uid'], id, '_images', name)
         storage.save_from_data(key_name, content_type, content)
 
-        return jsonify({'url': settings.AWS_STORAGE_BUCKET_URL+key_name})
+        return jsonify({'url': bucket_url()+key_name})
     except storage.StorageException, e:
         traceback.print_exc()
         return jsonify({'error': str(e), 'error_detail': e.detail})
@@ -823,7 +831,7 @@ def admin_users(user):
         'pages': pages,
         'args': args,
         'querystring': urllib.urlencode(args.items()),
-        'storage_root': settings.AWS_STORAGE_BUCKET_URL
+        'storage_root': bucket_url()
     })
 
 
