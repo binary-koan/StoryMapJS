@@ -1253,12 +1253,26 @@ $(function() {
 // ------------------------------------------------------------
     
     $('#marker_url').change(function(event) {
-        var old = _slides[_current_slide_index].location.icon;
-        _slides[_current_slide_index].location.use_custom_marker = Boolean($(this).val());
-        _slides[_current_slide_index].location.icon = $(this).val().trim();
-        console.log("TEST, "+ (old || 'no image') +" => "+ $(this).val().trim());
-        storymap_dirty(1);
-        location_mark(_slides[_current_slide_index]);
+        var currentSlide = _slides[_current_slide_index];
+        var icon = $(this).val().trim();
+        var img = new Image();
+        
+        img.onload = function() {
+        	console.log("loaded");
+        	currentSlide.location.use_custom_marker = Boolean($(this).val());
+	        currentSlide.location.icon = icon;
+        	currentSlide.location.iconSize = [this.width, this.height];
+        	var size = currentSlide.location.iconSize;
+        	if (this.width > this.height) {
+        		currentSlide.location.iconSize = [48, this.height * 48/this.width ];
+        	} else {
+        		currentSlide.location.iconSize = [this.width * 48/this.height, 48];
+        	}
+		    storymap_dirty(1);
+		    location_mark(_slides[_current_slide_index]);
+        }
+        
+        img.src = icon;
     });
 
     modal_init($('#marker_opt_modal'))
@@ -1266,19 +1280,17 @@ $(function() {
             $(this).trigger('refresh_image_select');
             $('#marker_url').val(url).change();
             $(this).find('.upload-panel').trigger('reset');
+            
         }) 
         .on('refresh_image_select', function(event) {
             var html = '<li><a href="javascript:">(Default icon)</a></li>';
             for(var i = 0; i < _storymap_files.length; i++) {
-                // TODO: find a nicer way of trimming these (local doesn't look nice)
                 html += '<li><a href="javascript:" data-filename="'+_storymap_files[i]+'">'+_storymap_files[i]+'</a></li>';
             }
             $('.image-select').html(html || '<li class="default">no uploaded images found</li>');
         })
         .on('modal_show', function(event, error_msg) {
-                // need vars for markers
-                var marker = _slides[_current_slide_index].location.icon;
-                // TODO: disable/enable custom marker checkbox
+            var marker = _slides[_current_slide_index].location.icon;
             $(this).trigger('refresh_image_select');
 
             $('#marker_image_select a').click(function(event) {
