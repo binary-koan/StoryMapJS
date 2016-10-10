@@ -88,7 +88,7 @@ VCO.MapMarker.Leaflet = VCO.MapMarker.extend({
 		return new L.icon({iconUrl: this._custom_icon.url, iconSize: this._custom_icon.size, iconAnchor: this._custom_icon.anchor});
 	},
 	
-	_createImage: function(active) { // TODO: calculate shadow dimensions
+	_createImage: function(active) {
 		var className = active ? "vco-mapmarker-image-icon-active" : "vco-mapmarker-image-icon";
 		return new L.icon({iconUrl: url, iconSize: [48], iconAnchor:[24, 48], shadowSize: [68, 95], shadowAnchor: [22, 94], className: className});
 	},
